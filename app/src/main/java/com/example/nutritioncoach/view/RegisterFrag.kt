@@ -40,8 +40,18 @@ class RegisterFrag : Fragment() {
 
 
         binding.register.setOnClickListener { view ->
+
+
             GlobalScope.launch(Dispatchers.IO) {
+                withContext(Dispatchers.Main) {
+                if (!validateInput(binding.email,
+                        binding.password)){
+                    cancel("")
+
+                }
+                }
                 Log.d("TAG", "loading: ")
+
                 val result = AuthRepo().register(
                     binding.email.text.toString(),
                     binding.password.password.text.toString()
@@ -55,9 +65,8 @@ class RegisterFrag : Fragment() {
 
 
                 } else{
-
-
-                withContext(Dispatchers.Main) {
+                    Log.d("TAG", "error: ")
+                    withContext(Dispatchers.Main) {
                     context?.let { Toasty.error(it,
                         result.errorMessage.toString(), Toast.LENGTH_SHORT, true).show() }
 
@@ -74,6 +83,19 @@ class RegisterFrag : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         auth=Firebase.auth
+    }
+
+    private fun validateInput(email: EditText,password: EditText):Boolean{
+        if(email.text.isEmpty()){
+            context?.let { Toasty.error(it,"email is required",Toasty.LENGTH_LONG).show() }
+            return false
+        }
+        if(password.text.isEmpty()){
+            context?.let { Toasty.error(it,"password is required",Toasty.LENGTH_LONG).show() }
+            return false
+        }
+
+        return true
     }
 
     private fun clearFields(email :EditText,password :EditText){
