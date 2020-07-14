@@ -3,6 +3,7 @@ package com.example.nutritioncoach
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import com.example.nutritioncoach.databinding.ActivityMainBinding
 import com.example.nutritioncoach.view.RegisterFrag
 import com.google.firebase.FirebaseApp
@@ -20,6 +21,13 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager
             .beginTransaction()
             .add(R.id.container,registerFrag,"")
+            .commit()
+    }
+
+    public fun goTo(fragment : Fragment){
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container,fragment,"")
             .commit()
     }
 }

@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.nutritioncoach.MainActivity
 import com.example.nutritioncoach.R
 import com.example.nutritioncoach.databinding.FragmentRegisterBinding
 import com.example.nutritioncoach.repo.AuthRepo
@@ -19,11 +20,9 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_register.view.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class RegisterFrag : Fragment() {
 
@@ -36,22 +35,37 @@ class RegisterFrag : Fragment() {
     ): View? {
         val binding=DataBindingUtil.inflate<FragmentRegisterBinding>(inflater,R.layout.fragment_register,container,false)
         registerVM=ViewModelProvider(this).get(RegisterVM::class.java)
+
+
+
+
         binding.register.setOnClickListener { view ->
             GlobalScope.launch(Dispatchers.IO) {
                 Log.d("TAG", "loading: ")
-                val result=AuthRepo().register(binding.email.text.toString(),binding.password.password.text.toString())
-                if (result.isSuccessfull!!){
-                    clearFields(binding.email,binding.password)
-                    Log.d("TAG", " success "+ result.authResult?.user?.uid )
-                    goTo()
+                val result = AuthRepo().register(
+                    binding.email.text.toString(),
+                    binding.password.password.text.toString()
+                )
+                if (result.isSuccessfull!!) {
+                    withContext(Dispatchers.Main){
+                    clearFields(binding.email, binding.password)
+                    Log.d("TAG", " success " + result.authResult?.user?.uid)
+                        (activity as MainActivity).goTo(MainFrag());
+                    }
 
 
-                }else
-                    Toast.makeText(context,result.errorMessage,Toast.LENGTH_LONG).show()
+                } else{
+
+
+                withContext(Dispatchers.Main) {
+                    context?.let { Toasty.error(it,
+                        result.errorMessage.toString(), Toast.LENGTH_SHORT, true).show() }
+
+                }
+                }
+
 
             }
-
-
         }
 
         return binding.root
@@ -66,22 +80,6 @@ class RegisterFrag : Fragment() {
         email.setText("")
         password.setText("")
     }
-    private fun goTo(fragment :Fragment){
-        childFragmentManager
-            .beginTransaction()
-            .replace(R.id.container,fragment)
-            .commit()
-    }
 
-    private fun register(email :String ,password :String){
-        auth.createUserWithEmailAndPassword(email,password)
-            .addOnCompleteListener(){
-                task ->
-                if(task.isSuccessful){
-                    Toast.makeText(context,"registered successfully",Toast.LENGTH_LONG).show();
-                }else
-                    Toast.makeText(context,"registeration error",Toast.LENGTH_LONG).show();
 
-            }
-    }
 }
