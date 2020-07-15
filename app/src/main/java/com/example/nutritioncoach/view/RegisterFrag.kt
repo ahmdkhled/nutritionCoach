@@ -1,5 +1,6 @@
 package com.example.nutritioncoach.view
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +17,8 @@ import com.example.nutritioncoach.R
 import com.example.nutritioncoach.databinding.FragmentRegisterBinding
 import com.example.nutritioncoach.repo.AuthRepo
 import com.example.nutritioncoach.viewModel.RegisterVM
+import com.github.razir.progressbutton.hideProgress
+import com.github.razir.progressbutton.showProgress
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -40,16 +43,19 @@ class RegisterFrag : Fragment() {
 
 
         binding.register.setOnClickListener { view ->
+            if (!validateInput(binding.email,
+                    binding.password)){
+                return@setOnClickListener;
 
+            }
+            binding.register.showProgress{
+                buttonTextRes = R.string.loading
+                progressColor=Color.WHITE
+            }
 
             GlobalScope.launch(Dispatchers.IO) {
-                withContext(Dispatchers.Main) {
-                if (!validateInput(binding.email,
-                        binding.password)){
-                    cancel("")
 
-                }
-                }
+
                 Log.d("TAG", "loading: ")
 
                 val result = AuthRepo().register(
@@ -58,8 +64,9 @@ class RegisterFrag : Fragment() {
                 )
                 if (result.isSuccessfull!!) {
                     withContext(Dispatchers.Main){
-                    clearFields(binding.email, binding.password)
-                    Log.d("TAG", " success " + result.authResult?.user?.uid)
+                        binding.register.hideProgress(R.string.done)
+                        clearFields(binding.email, binding.password)
+                        Log.d("TAG", " success " + result.authResult?.user?.uid)
                         (activity as MainActivity).goTo(MainFrag());
                     }
 
@@ -67,7 +74,9 @@ class RegisterFrag : Fragment() {
                 } else{
                     Log.d("TAG", "error: ")
                     withContext(Dispatchers.Main) {
-                    context?.let { Toasty.error(it,
+                        binding.register.hideProgress(R.string.try_again)
+
+                        context?.let { Toasty.error(it,
                         result.errorMessage.toString(), Toast.LENGTH_SHORT, true).show() }
 
                 }

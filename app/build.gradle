@@ -54,6 +54,7 @@ dependencies {
 
     implementation 'com.github.GrenderG:Toasty:1.4.2'
     implementation 'com.flaviofaria:kenburnsview:1.0.7'
+    implementation 'com.github.razir.progressbutton:progressbutton:2.1.0'
 
 
 }
