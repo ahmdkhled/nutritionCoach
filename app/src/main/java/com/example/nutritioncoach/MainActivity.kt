@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.nutritioncoach.databinding.ActivityMainBinding
+import com.example.nutritioncoach.view.AddInfoFrag
 import com.example.nutritioncoach.view.MainFrag
 import com.example.nutritioncoach.view.RegisterFrag
 import com.google.firebase.FirebaseApp
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         if (currentUser==null)
             goTo(registerFrag)
         else
-            goTo(MainFrag())
+            goTo(AddInfoFrag())
 
 
     }
