@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/logo"
+            android:text="Complete your information"
+            android:textSize="25sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/name_IL"
+            app:layout_constraintTop_toBottomOf="@id/logo"
+            android:layout_marginTop="10dp"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="your name"
+                android:inputType="text"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/age_IL"
+            app:layout_constraintTop_toBottomOf="@id/name_IL"
+            android:layout_marginTop="10dp"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="your age"
+                android:inputType="number"
+                 />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <belka.us.androidtoggleswitch.widgets.MultipleToggleSwitch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_height="60dp"
+            tools:background="#DADAD9"
+            android:id="@+id/goal"
+            app:toggleWidth="82dp"
+            app:activeBgColor="#3ECC4B"
+            app:textToggleLeft="loss weight"
+            app:textToggleRight="gain weight"
+            app:layout_constraintTop_toBottomOf="@id/age_IL"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/height_IL"
+            app:layout_constraintTop_toBottomOf="@id/goal"
+            android:layout_marginTop="10dp"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="your height"
+                android:inputType="number"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/weight_IL"
+            app:layout_constraintTop_toBottomOf="@id/height_IL"
+            android:layout_marginTop="10dp"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="your weight"
+                android:inputType="number"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/save"
+            android:text="save"
+            android:background="#3ECC4B"
+            android:textColor="#fff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="5dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
