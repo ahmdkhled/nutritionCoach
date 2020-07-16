@@ -112,8 +112,8 @@
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/done"
-            android:text="done"
+            android:id="@+id/save"
+            android:text="save"
             android:background="#3ECC4B"
             android:textColor="#fff"
             app:layout_constraintBottom_toBottomOf="parent"

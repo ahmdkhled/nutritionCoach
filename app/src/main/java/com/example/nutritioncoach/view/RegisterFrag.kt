@@ -67,7 +67,7 @@ class RegisterFrag : Fragment() {
                         binding.register.hideProgress(R.string.done)
                         clearFields(binding.email, binding.password)
                         Log.d("TAG", " success " + result.authResult?.user?.uid)
-                        (activity as MainActivity).goTo(MainFrag());
+                        (activity as MainActivity).goTo(AddInfoFrag());
                     }
 
 

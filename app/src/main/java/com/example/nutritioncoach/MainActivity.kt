@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         if (currentUser==null)
             goTo(registerFrag)
         else
-            goTo(AddInfoFrag())
+            goTo(MainFrag())
 
 
     }
