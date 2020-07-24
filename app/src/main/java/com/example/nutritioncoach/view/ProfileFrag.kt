@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.nutritioncoach.R
 import com.example.nutritioncoach.databinding.FragmentProfileBinding
 import com.example.nutritioncoach.viewModel.ProfileFragVM
@@ -50,7 +51,7 @@ class ProfileFrag :Fragment() {
         info: MutableMap<String, Any>?
     ){
         if (info==null)return
-
+        binding.setVariable(R.id.info,info.toMap())
         binding.name.text = info["name"].toString()
         binding.goal.text=info["goal"].toString()
         binding.height.text=info["height"].toString()
@@ -58,5 +59,10 @@ class ProfileFrag :Fragment() {
         val weight =info["weight"].toString().trim()
         binding.weightGauge.moveToValue(weight.toFloat() )
         binding.weight.text=weight+" KG"
+        Log.d(TAG, "populateInfo: "+info["image"])
+        Glide
+            .with(context!!)
+            .load(info["image"])
+            .into(binding.image)
     }
 }

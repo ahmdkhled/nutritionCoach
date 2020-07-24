@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 
 android {
@@ -59,6 +60,10 @@ dependencies {
     implementation 'us.belka:androidtoggleswitch:1.2.2'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.github.Pygmalion69:Gauge:1.5.2'
+
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
 
 }
