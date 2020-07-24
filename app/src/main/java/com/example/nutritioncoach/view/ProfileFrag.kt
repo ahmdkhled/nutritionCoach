@@ -18,6 +18,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.math.RoundingMode
+import java.text.DecimalFormat
+import kotlin.math.pow
 
 class ProfileFrag :Fragment() {
 
@@ -57,12 +60,23 @@ class ProfileFrag :Fragment() {
         binding.height.text=info["height"].toString()
         binding.weightGoal.text=info["weightGoal"].toString()
         val weight =info["weight"].toString().trim()
+        val height =info["height"].toString().trim()
         binding.weightGauge.moveToValue(weight.toFloat() )
         binding.weight.text=weight+" KG"
-        Log.d(TAG, "populateInfo: "+info["image"])
-        Glide
-            .with(context!!)
-            .load(info["image"])
-            .into(binding.image)
+        val bmi=(weight.toFloat() /(height.toFloat()/100).pow(2))
+
+
+
+        binding.bmiGauge.moveToValue(bmi)
+        val df = DecimalFormat("#.##")
+        df.roundingMode = RoundingMode.CEILING
+
+        binding.bmi.text=df.format(bmi)
+        context?.let {
+            Glide
+                .with(it)
+                .load(info["image"])
+                .into(binding.image)
+        }
     }
 }
