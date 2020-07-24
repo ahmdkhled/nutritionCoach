@@ -1,5 +1,7 @@
 package com.example.nutritioncoach.repo
 
+import com.example.nutritioncoach.model.DBResult
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -27,4 +29,19 @@ class UserRepo {
         }
 
     }
+
+    suspend fun getUserData(uid:String): DBResult? {
+        try {
+        val result= db.collection("users")
+            .document(uid)
+            .get()
+            .await()
+            return DBResult(result,true,null)
+
+        }catch (e:Exception){
+            return DBResult(null,false,e.message)
+
+        }
+    }
+
 }
