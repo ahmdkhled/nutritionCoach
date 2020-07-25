@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 class Binder {
     @BindingAdapter("android:src")
     public fun load(imageview:ImageView,url:String){
+        //todo implement binding adapter
         Log.d("Binderr", "load: "+url)
         Glide
             .with(imageview.context)

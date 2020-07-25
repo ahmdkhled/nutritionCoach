@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.nutritioncoach.R
 import com.example.nutritioncoach.databinding.FragmentProfileBinding
+import com.example.nutritioncoach.model.UserInfo
 import com.example.nutritioncoach.viewModel.ProfileFragVM
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -26,6 +27,7 @@ class ProfileFrag :Fragment() {
 
     private  val TAG = "ProfileFragg"
     lateinit var profileFragVM :ProfileFragVM
+    val uid=Firebase.auth.uid
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,7 +35,7 @@ class ProfileFrag :Fragment() {
     ): View? {
         val binding=DataBindingUtil.inflate<FragmentProfileBinding>(inflater, R.layout.fragment_profile,container,false)
         profileFragVM=ViewModelProvider(this).get(ProfileFragVM::class.java)
-        val uid=Firebase.auth.uid;
+
 
          GlobalScope.launch {
              if (uid==null)return@launch
@@ -53,25 +55,22 @@ class ProfileFrag :Fragment() {
         binding:FragmentProfileBinding,
         info: MutableMap<String, Any>?
     ){
-        if (info==null)return
-        binding.setVariable(R.id.info,info.toMap())
-        binding.name.text = info["name"].toString()
-        binding.goal.text=info["goal"].toString()
-        binding.height.text=info["height"].toString()
-        binding.weightGoal.text=info["weightGoal"].toString()
-        val weight =info["weight"].toString().trim()
-        val height =info["height"].toString().trim()
-        binding.weightGauge.moveToValue(weight.toFloat() )
-        binding.weight.text=weight+" KG"
-        val bmi=(weight.toFloat() /(height.toFloat()/100).pow(2))
+        if (info==null ||uid==null)return
+        info.put("uid",uid)
+        val userInfo =UserInfo(info)
+        Log.d(TAG, "populateInfo: "+userInfo.toString())
+        val weight=userInfo.weight
+        val height=userInfo.height
+        if (weight!=null&&height!=null){
+            binding.weightGauge.moveToValue(weight.toFloat())
+            val bmi=(weight.toFloat() /(height.toFloat()/100).pow(2))
+            binding.bmiGauge.moveToValue(bmi)
+            val df = DecimalFormat("#.##")
+            df.roundingMode = RoundingMode.CEILING
+            userInfo.bmi=df.format(bmi)
+        }
+        binding.info=userInfo
 
-
-
-        binding.bmiGauge.moveToValue(bmi)
-        val df = DecimalFormat("#.##")
-        df.roundingMode = RoundingMode.CEILING
-
-        binding.bmi.text=df.format(bmi)
         context?.let {
             Glide
                 .with(it)

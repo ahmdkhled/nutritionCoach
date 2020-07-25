@@ -6,7 +6,7 @@
     <data>
         <variable
             name="info"
-            type="java.util.Map" />
+            type="com.example.nutritioncoach.model.UserInfo" />
     </data>
 
     <ScrollView
@@ -42,6 +42,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/name"
             tools:text="Ahmed Khaled"
+            android:text="@{info.name}"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/image"
@@ -84,6 +85,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/weight_goal"
                     tools:text="80 KG"
+                    android:text='@{info.weightGoal==-1?"-":String.valueOf(info.weightGoal)}'
                     app:layout_constraintStart_toStartOf="@id/weight_label"
                     app:layout_constraintTop_toBottomOf="@id/weight_label"
                     app:layout_constraintEnd_toEndOf="@id/weight_label"
@@ -109,6 +111,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/height"
                     tools:text="170 CM"
+                    android:text="@{String.valueOf(info.height)}"
                     app:layout_constraintStart_toStartOf="@id/hight_label"
                     app:layout_constraintTop_toBottomOf="@id/hight_label"
                     app:layout_constraintEnd_toEndOf="@id/hight_label"
@@ -133,6 +136,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/goal"
                     tools:text="Weight Loss"
+                    android:text="@{info.goal}"
                     app:layout_constraintEnd_toEndOf="@id/goal_label"
                     app:layout_constraintStart_toStartOf="@id/goal_label"
                     app:layout_constraintTop_toBottomOf="@id/goal_label"
@@ -162,9 +166,10 @@
             android:layout_height="wrap_content"
             android:id="@+id/weight"
             tools:text="100 KG"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
+            android:text='@{info.weight==-1||info.weight==null?"-":String.valueOf(info.weight+" KG")}'
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="#F10C0C"
             app:layout_constraintTop_toBottomOf="@id/weight_gauge"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -192,6 +197,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/bmi"
             tools:text="25"
+            android:text="@{info.bmi}"
             android:textSize="25sp"
             android:textStyle="bold"
             android:textColor="@color/colorPrimary"
