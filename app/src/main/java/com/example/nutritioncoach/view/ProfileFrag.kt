@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -70,6 +71,8 @@ class ProfileFrag :Fragment() {
             userInfo.bmi=df.format(bmi)
         }
         binding.info=userInfo
+        binding.weight.startAnimation(AnimationUtils.loadAnimation(context,R.anim.tv_animation))
+        binding.bmi.startAnimation(AnimationUtils.loadAnimation(context,R.anim.tv_animation))
 
         context?.let {
             Glide

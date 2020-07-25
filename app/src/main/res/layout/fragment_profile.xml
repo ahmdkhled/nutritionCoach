@@ -169,7 +169,7 @@
             android:text='@{info.weight==-1||info.weight==null?"-":String.valueOf(info.weight+" KG")}'
             android:textSize="20sp"
             android:fontFamily="sans-serif-condensed"
-            android:textColor="#F10C0C"
+            android:textColor="#434242"
             app:layout_constraintTop_toBottomOf="@id/weight_gauge"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
