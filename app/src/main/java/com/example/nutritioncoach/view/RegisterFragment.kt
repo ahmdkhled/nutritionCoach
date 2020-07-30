@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.nutritioncoach.MainActivity
@@ -19,7 +18,6 @@ import com.example.nutritioncoach.repo.AuthRepo
 import com.example.nutritioncoach.viewModel.RegisterVM
 import com.github.razir.progressbutton.hideProgress
 import com.github.razir.progressbutton.showProgress
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -27,7 +25,7 @@ import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_register.view.*
 import kotlinx.coroutines.*
 
-class RegisterFrag : Fragment() {
+class RegisterFragment : Fragment() {
 
     private lateinit var auth: FirebaseAuth;
     private lateinit var registerVM: RegisterVM;
@@ -38,8 +36,6 @@ class RegisterFrag : Fragment() {
     ): View? {
         val binding=DataBindingUtil.inflate<FragmentRegisterBinding>(inflater,R.layout.fragment_register,container,false)
         registerVM=ViewModelProvider(this).get(RegisterVM::class.java)
-
-
 
 
         binding.register.setOnClickListener { view ->
@@ -67,7 +63,7 @@ class RegisterFrag : Fragment() {
                         binding.register.hideProgress(R.string.done)
                         clearFields(binding.email, binding.password)
                         Log.d("TAG", " success " + result.authResult?.user?.uid)
-                        (activity as MainActivity).goTo(AddInfoFrag());
+                        (activity as MainActivity).loadFragment(AddInfoFragment());
                     }
 
 

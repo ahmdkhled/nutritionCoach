@@ -1,7 +1,6 @@
 package com.example.nutritioncoach.repo
 
-import android.content.Context
-import android.widget.Toast
+
 import com.example.nutritioncoach.model.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -13,13 +12,10 @@ class AuthRepo{
 
     suspend fun register(email :String ,password :String) : AuthResult{
         try {
-
-
             val result= auth.createUserWithEmailAndPassword(email, password)
                 .await();
             return AuthResult(result,true,null)
         }catch (exception : Exception){
-
             return AuthResult(null,false,exception.message);
         }
     }

@@ -24,7 +24,7 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import kotlin.math.pow
 
-class ProfileFrag :Fragment() {
+class ProfileFragment :Fragment() {
 
     private  val TAG = "ProfileFragg"
     lateinit var profileFragVM :ProfileFragVM

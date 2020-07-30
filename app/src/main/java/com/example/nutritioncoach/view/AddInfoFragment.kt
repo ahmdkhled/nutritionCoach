@@ -1,14 +1,12 @@
 package com.example.nutritioncoach.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import belka.us.androidtoggleswitch.widgets.BaseToggleSwitch
 import com.example.nutritioncoach.MainActivity
 import com.example.nutritioncoach.R
 import com.example.nutritioncoach.databinding.FragmentAddInfoBinding
@@ -23,7 +21,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AddInfoFrag :Fragment() {
+class AddInfoFragment :Fragment() {
 
     lateinit var addInfoFragVM:AddInfoFragVM;
     var goal:String="";
@@ -52,7 +50,7 @@ class AddInfoFrag :Fragment() {
                 )
                 if (success){
                     withContext(Dispatchers.Main){
-                        (activity as MainActivity).goTo(MainFrag())
+                        (activity as MainActivity).loadFragment(DashboardFragment())
                         binding.save.hideProgress(R.string.done)
                     }
 
