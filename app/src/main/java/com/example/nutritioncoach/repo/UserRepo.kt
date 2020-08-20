@@ -1,5 +1,6 @@
 package com.example.nutritioncoach.repo
 
+import android.util.Log
 import com.example.nutritioncoach.model.DBResult
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -7,6 +8,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
 class UserRepo {
+    private  val TAG = "UserRepo"
     var db= FirebaseFirestore.getInstance();
 
     public suspend fun saveUserData(uid :String,name :String,age:Int ,goal : String,height :Int ,weight :Int):Boolean{
@@ -25,6 +27,7 @@ class UserRepo {
                 .await();
             return true;
         }catch (exception :Exception){
+            Log.d(TAG, "saveUserData: "+exception)
             return false;
         }
 
