@@ -21,6 +21,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class DashboardFragment : Fragment() {
@@ -48,6 +50,9 @@ class DashboardFragment : Fragment() {
                 withContext(Dispatchers.Main){
                     binding.planRecycler.adapter=adapter
                     binding.planRecycler.layoutManager= LinearLayoutManager(context)
+                    val todayIndex= Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
+                    binding.planRecycler.scrollToPosition(todayIndex)
+
 
                 }
 

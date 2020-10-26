@@ -1,6 +1,7 @@
 package com.example.nutritioncoach.adapters
 
 import android.content.Context
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,9 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.nutritioncoach.R
 import com.example.nutritioncoach.databinding.DayLayoutBinding
 import com.example.nutritioncoach.model.Day
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PlanDaysAdapter(var daysPlan: ArrayList<Day>, val context: Context?) : RecyclerView.Adapter<PlanDaysAdapter.PlanDaysViewHolder>() {
 
+    private  val TAG = "PlanDaysAdapter"
     init {
         Log.d("DashboardFragmentt", "constructor "+daysPlan.size)
     }
@@ -42,6 +46,10 @@ class PlanDaysAdapter(var daysPlan: ArrayList<Day>, val context: Context?) : Rec
         holder.binding.dinner.adapter=dinnerAdapter
         holder.binding.dinner.layoutManager=LinearLayoutManager(context)
 
+        val todayIndex=Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
+        Log.d(TAG, "onBindViewHolder: "+todayIndex)
+        if(todayIndex==position)
+            holder.binding.container.setBackgroundColor(Color.WHITE)
 
     }
 
