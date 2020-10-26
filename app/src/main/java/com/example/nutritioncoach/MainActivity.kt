@@ -2,6 +2,7 @@ package com.example.nutritioncoach
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.nutritioncoach.databinding.ActivityMainBinding
@@ -44,10 +45,14 @@ class MainActivity : AppCompatActivity() {
         }
         val registerFrag=RegisterFragment();
         val currentUser= Firebase.auth.currentUser
-        if (currentUser==null)
+        if (currentUser==null){
+            binding.bottomNavigationView.visibility= View.GONE
             loadFragment(registerFrag)
-        else
+        }
+        else{
+            binding.bottomNavigationView.selectedItemId=R.id.navigationDashboard
             loadFragment(DashboardFragment())
+        }
     }
 
 
