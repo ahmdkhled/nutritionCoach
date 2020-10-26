@@ -17,11 +17,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         FirebaseApp.initializeApp(this)
 
         val binding=DataBindingUtil.setContentView<ActivityMainBinding>(this,R.layout.activity_main)
-
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
             when{
                 menuItem.itemId == R.id.navigationDashboard -> {
@@ -56,7 +54,7 @@ class MainActivity : AppCompatActivity() {
      fun loadFragment(fragment : Fragment){
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragmentContainer,fragment,"")
+            .replace(R.id.fragmentContainer,fragment)
             .commit()
     }
 }
