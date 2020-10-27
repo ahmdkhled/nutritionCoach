@@ -9,4 +9,15 @@
     <string name="dashboard">Dashboard</string>
     <string name="profile">Profile</string>
     <string name="chat">Chat</string>
+
+
+    <string-array name="weekDays">
+        <item>Saturday</item>
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+    </string-array>
 </resources>

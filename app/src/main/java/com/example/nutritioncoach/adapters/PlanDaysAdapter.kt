@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.nutritioncoach.R
 import com.example.nutritioncoach.databinding.DayLayoutBinding
 import com.example.nutritioncoach.model.Day
+import com.example.nutritioncoach.utils.Constants
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -47,9 +48,11 @@ class PlanDaysAdapter(var daysPlan: ArrayList<Day>, val context: Context?) : Rec
         holder.binding.dinner.layoutManager=LinearLayoutManager(context)
 
         val todayIndex=Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
+        holder.binding.day.text= context?.let { Constants.getWeekDays(it).get(position) }
+
         Log.d(TAG, "onBindViewHolder: "+todayIndex)
         if(todayIndex==position)
-            holder.binding.container.setBackgroundColor(Color.WHITE)
+            holder.binding.day.setTextColor(Color.parseColor("#3ECC4B"))
 
     }
 
