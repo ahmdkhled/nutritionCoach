@@ -51,8 +51,11 @@ class PlanDaysAdapter(var daysPlan: ArrayList<Day>, val context: Context?) : Rec
         holder.binding.day.text= context?.let { Constants.getWeekDays(it).get(position) }
 
         Log.d(TAG, "onBindViewHolder: "+todayIndex)
-        if(todayIndex==position)
+        if(todayIndex==position){
             holder.binding.day.setTextColor(Color.parseColor("#3ECC4B"))
+            holder.binding.container.setBackgroundResource(R.drawable.selected_card_bg)
+
+        }
 
     }
 
