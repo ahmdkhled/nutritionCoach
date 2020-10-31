@@ -19,4 +19,16 @@ class AuthRepo{
             return AuthResult(null,false,exception.message);
         }
     }
+
+    suspend fun login(email:String,password: String):AuthResult{
+        try {
+
+            val result=auth.signInWithEmailAndPassword(email, password)
+                .await()
+            return AuthResult(result,true,null)
+        }catch (exception : Exception){
+            return AuthResult(null,false,exception.message)
+
+        }
+    }
 }

@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.nutritioncoach.MainActivity
 import com.example.nutritioncoach.R
 import com.example.nutritioncoach.databinding.FragmentRegisterBinding
 import com.example.nutritioncoach.repo.AuthRepo

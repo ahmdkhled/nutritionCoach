@@ -1,15 +1,12 @@
-package com.example.nutritioncoach
+package com.example.nutritioncoach.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.example.nutritioncoach.R
 import com.example.nutritioncoach.databinding.ActivityMainBinding
-import com.example.nutritioncoach.view.ChatFragment
-import com.example.nutritioncoach.view.DashboardFragment
-import com.example.nutritioncoach.view.ProfileFragment
-import com.example.nutritioncoach.view.RegisterFragment
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -20,7 +17,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
 
-        val binding=DataBindingUtil.setContentView<ActivityMainBinding>(this,R.layout.activity_main)
+        val binding=DataBindingUtil.setContentView<ActivityMainBinding>(this,
+            R.layout.activity_main
+        )
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
             when{
                 menuItem.itemId == R.id.navigationDashboard -> {
@@ -43,14 +42,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        val registerFrag=RegisterFragment();
+        val loginFrag=LoginFrag();
         val currentUser= Firebase.auth.currentUser
         if (currentUser==null){
             binding.bottomNavigationView.visibility= View.GONE
-            loadFragment(registerFrag)
+            loadFragment(loginFrag)
         }
         else{
-            binding.bottomNavigationView.selectedItemId=R.id.navigationDashboard
+            binding.bottomNavigationView.selectedItemId=
+                R.id.navigationDashboard
             loadFragment(DashboardFragment())
         }
     }
