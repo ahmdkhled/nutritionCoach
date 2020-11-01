@@ -1,6 +1,7 @@
 package com.example.nutritioncoach.view
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +39,15 @@ class LoginFrag :Fragment() {
     }
 
     fun login(email:String,password:String){
+        if (TextUtils.isEmpty(email)){
+            context?.let{Toasty.error(it,"Email is empty",Toasty.LENGTH_LONG).show()}
+            return
+        }
+        if (TextUtils.isEmpty(password)){
+            context?.let{Toasty.error(it,"Password is empty",Toasty.LENGTH_LONG).show()}
+            return
+        }
+
         GlobalScope.launch (Dispatchers.IO){
             val result=loginFragVM.login(email,password)
             Log.d(TAG, "login: "+result.isSuccessfull)
@@ -46,7 +56,7 @@ class LoginFrag :Fragment() {
                     Log.d(TAG, "sucess in: ")
                     (activity as MainActivity).loadFragment(DashboardFragment())
                 }else
-                    context?.let { Toasty.info(it,"login failed "+result.errorMessage).show() }
+                    context?.let { Toasty.error(it,"login failed "+result.errorMessage).show() }
             }
 
 
