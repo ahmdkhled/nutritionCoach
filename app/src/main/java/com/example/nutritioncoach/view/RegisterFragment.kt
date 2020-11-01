@@ -81,6 +81,10 @@ class RegisterFragment : Fragment() {
             }
         }
 
+        binding.login.setOnClickListener {
+            (activity as MainActivity).loadFragment(LoginFrag())
+        }
+
         return binding.root
     }
 
