@@ -9,6 +9,7 @@
     <string name="dashboard">Dashboard</string>
     <string name="profile">Profile</string>
     <string name="chat">Chat</string>
+    <string name="login">login</string>
 
 
     <string-array name="weekDays">
