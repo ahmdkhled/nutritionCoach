@@ -39,6 +39,10 @@ class LoginFrag :Fragment() {
             login(binding.email.text.toString(),binding.password.text.toString())
 
         }
+
+        binding.register.setOnClickListener {
+            (activity as MainActivity).loadFragment(RegisterFragment())
+        }
         return binding.root
     }
 
