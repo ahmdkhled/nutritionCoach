@@ -34,7 +34,7 @@ class ChatFragment : Fragment() {
         val binding=DataBindingUtil.inflate<FragmentChatBinding>(inflater,R.layout.fragment_chat,container,false)
         chatFragVM=ViewModelProvider(this).get(ChatFragVM::class.java)
 
-        adapter=MessagesAdapter(getFakeMessages())
+        adapter=MessagesAdapter(ArrayList())
         binding.chatRecycler.adapter=adapter
         val layoutManager =LinearLayoutManager(context)
         binding.chatRecycler.layoutManager=layoutManager
