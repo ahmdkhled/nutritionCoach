@@ -16,6 +16,7 @@ import com.example.nutritioncoach.model.Message
 import com.example.nutritioncoach.repo.MessagesRepo
 import com.example.nutritioncoach.viewModel.ChatFragVM
 import com.google.firebase.firestore.DocumentSnapshot
+import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -46,8 +47,11 @@ class ChatFragment : Fragment() {
         }
 
         GlobalScope.launch {
-            val documents= chatFragVM.getMessages("HFJSBFJFIJIEJRI")
-                .documentSnapshot?.documents
+            val res=chatFragVM.getMessages("HFJSBFJFIJIEJRI");
+            if (!res.isSuccessfull){
+                context?.let { Toasty.error(it,"Error Loading Chat",Toasty.LENGTH_LONG).show() }
+            }
+            val documents= res.documentSnapshot?.documents
 
             if (documents != null) {
                 for (doc in documents){
