@@ -22,6 +22,7 @@ class MessagesRepo {
                 .document(conversationId)
                 .collection("messages")
                 .limit(10)
+                .orderBy("timestamp")
                 .addSnapshotListener { value, error ->
                     val res=DBResult2(value,true,null)
                     this@callbackFlow.sendBlocking(res)
