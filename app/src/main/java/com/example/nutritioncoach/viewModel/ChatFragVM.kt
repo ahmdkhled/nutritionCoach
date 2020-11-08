@@ -4,10 +4,13 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.example.nutritioncoach.model.DBResult2
 import com.example.nutritioncoach.repo.MessagesRepo
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 
 class ChatFragVM(application: Application) : AndroidViewModel(application) {
 
-    suspend fun getMessages(conversationId: String): DBResult2 {
+    @ExperimentalCoroutinesApi
+    suspend fun getMessages(conversationId: String): Flow<DBResult2> {
         return MessagesRepo().getMessages(conversationId)
     }
 }

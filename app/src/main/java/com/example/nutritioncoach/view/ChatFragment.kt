@@ -13,20 +13,17 @@ import com.example.nutritioncoach.R
 import com.example.nutritioncoach.adapters.MessagesAdapter
 import com.example.nutritioncoach.databinding.FragmentChatBinding
 import com.example.nutritioncoach.model.Message
-import com.example.nutritioncoach.repo.MessagesRepo
 import com.example.nutritioncoach.viewModel.ChatFragVM
-import com.google.firebase.firestore.DocumentSnapshot
 import es.dmoral.toasty.Toasty
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
 
 class ChatFragment : Fragment() {
 
     lateinit var adapter:MessagesAdapter
     lateinit var chatFragVM:ChatFragVM
     private  val TAG = "ChatFragment"
+    @ExperimentalCoroutinesApi
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,26 +43,48 @@ class ChatFragment : Fragment() {
 
         }
 
+        getMessages()
+
+        return binding.root
+    }
+
+    @ExperimentalCoroutinesApi
+    fun getMessages(){
         GlobalScope.launch {
             val res=chatFragVM.getMessages("HFJSBFJFIJIEJRI");
-            if (!res.isSuccessfull){
-                context?.let { Toasty.error(it,"Error Loading Chat",Toasty.LENGTH_LONG).show() }
-            }
-            val documents= res.documentSnapshot?.documents
 
-            if (documents != null) {
-                for (doc in documents){
-                    val message: Message? =doc.toObject(Message::class.java)
-                    if (message != null) { message.id=doc.id }
-                    Log.d(TAG, "onCreateView: "+message.toString())
+            res.collect{
+
+                if (!it.isSuccessfull){
+                    context?.let { Toasty.error(it,"Error Loading Chat",Toasty.LENGTH_LONG).show()
+                        return@collect
+                    }
+                }
+
+                val documents= it.documentSnapshot?.documents
+
+                if (documents != null&&documents.size>0) {
+                    val messages=ArrayList<Message>()
+                    for (doc in documents){
+                        val message: Message? =doc.toObject(Message::class.java)
+                        if (message != null) {
+                            message.id=doc.id
+                            messages.add(message)
+
+                        }
+                        Log.d(TAG, "onCreateView: "+message.toString())
+
+                    }
                     withContext(Dispatchers.Main){
-                        adapter.addMessage(message!!)
+                        Log.d(TAG, "getMessages: "+messages.toString())
+                        adapter.setChatMessages(messages)
                     }
                 }
             }
-        }
 
-        return binding.root
+
+
+        }
     }
 
     fun getFakeMessages():ArrayList<Message>

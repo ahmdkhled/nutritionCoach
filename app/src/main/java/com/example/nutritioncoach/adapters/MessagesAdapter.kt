@@ -1,14 +1,12 @@
 package com.example.nutritioncoach.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nutritioncoach.R
 import com.example.nutritioncoach.databinding.LayoutIncomingChatBinding
 import com.example.nutritioncoach.databinding.LayoutOutgoingChatBinding
-import com.example.nutritioncoach.databinding.LayoutOutgoingChatBindingImpl
 import com.example.nutritioncoach.model.Message
 
 class MessagesAdapter(var messages:ArrayList<Message>) :RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -58,6 +56,16 @@ class MessagesAdapter(var messages:ArrayList<Message>) :RecyclerView.Adapter<Rec
 
     fun addMessage(message:Message){
         messages.add(message)
+        notifyDataSetChanged()
+    }
+    fun setChatMessages(messages: ArrayList<Message>){
+        this.messages.clear()
+        this.messages=messages
+        notifyDataSetChanged()
+    }
+
+    fun clear(){
+        messages.clear()
         notifyDataSetChanged()
     }
 
