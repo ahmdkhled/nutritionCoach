@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.collect
 
 class ChatFragment : Fragment() {
 
+    lateinit var binding:FragmentChatBinding
     lateinit var adapter:MessagesAdapter
     lateinit var chatFragVM:ChatFragVM
     private  val TAG = "ChatFragment"
@@ -30,7 +31,7 @@ class ChatFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding=DataBindingUtil.inflate<FragmentChatBinding>(inflater,R.layout.fragment_chat,container,false)
+         binding=DataBindingUtil.inflate(inflater,R.layout.fragment_chat,container,false)
         chatFragVM=ViewModelProvider(this).get(ChatFragVM::class.java)
 
         adapter=MessagesAdapter(ArrayList())
@@ -105,6 +106,7 @@ class ChatFragment : Fragment() {
     }
 
     fun sendMessage(message:String){
+        binding.messageBox.setText("")
         GlobalScope.launch {
             val success=chatFragVM.sendMessage(message,"")
             if (!success){
