@@ -1,7 +1,8 @@
 package com.example.nutritioncoach.repo
 
 import com.example.nutritioncoach.model.DBResult2
-import com.google.firebase.firestore.EventListener
+import com.example.nutritioncoach.model.Message
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -36,5 +37,24 @@ class MessagesRepo {
 
         return flow
 
+    }
+
+    suspend fun sendMessage(body:String,receiverId:String): Boolean {
+        val uid= FirebaseAuth.getInstance().uid ?: return false
+
+        val message=Message(null,body,2,uid,receiverId,System.currentTimeMillis())
+
+        try {
+            db.collection("chats")
+                .document("HFJSBFJFIJIEJRI")
+                .collection("messages")
+                .document()
+                .set(message)
+                .await()
+            return true
+
+        }catch (ex :Exception){
+            return false
+        }
     }
 }

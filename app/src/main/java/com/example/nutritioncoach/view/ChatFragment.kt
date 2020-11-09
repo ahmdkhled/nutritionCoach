@@ -1,6 +1,7 @@
 package com.example.nutritioncoach.view
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -40,6 +41,11 @@ class ChatFragment : Fragment() {
 
         binding.send.setOnClickListener{
             val message=binding.messageBox.text.toString()
+            if (TextUtils.isEmpty(message)){
+                context?.let { ctx -> Toasty.error(ctx,"please type a message",Toasty.LENGTH_SHORT).show() }
+                return@setOnClickListener
+            }
+            sendMessage(message)
 
         }
 
@@ -98,5 +104,23 @@ class ChatFragment : Fragment() {
         return messages
     }
 
+    fun sendMessage(message:String){
+        GlobalScope.launch {
+            val success=chatFragVM.sendMessage(message,"")
+            if (!success){
+                withContext(Dispatchers.Main) {
+                    context?.let { ctx ->
+                        Toasty.error(
+                            ctx,
+                            "error sending message",
+                            Toasty.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+
+        }
+
+    }
 
 }

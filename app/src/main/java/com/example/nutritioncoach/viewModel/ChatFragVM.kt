@@ -13,4 +13,9 @@ class ChatFragVM(application: Application) : AndroidViewModel(application) {
     suspend fun getMessages(conversationId: String): Flow<DBResult2> {
         return MessagesRepo().getMessages(conversationId)
     }
-}
+
+    suspend fun sendMessage(body:String,receiverId:String): Boolean {
+        return MessagesRepo().sendMessage(body,receiverId)
+    }
+
+    }
