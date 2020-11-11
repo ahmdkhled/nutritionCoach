@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 menuItem.itemId == R.id.navigationChat -> {
-                    loadFragment(ChatFragment())
+                    loadFragment(ConversationsFrag())
                     return@setOnNavigationItemSelectedListener true
 
                 }
