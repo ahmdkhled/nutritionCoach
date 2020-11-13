@@ -1,7 +1,7 @@
 package com.example.nutritioncoach.model
 
-data class UserInfo(var uid:String?,var name:String?,var age:Int?,var goal:String?,var weight:Int?,var height:Int?
-                    ,var weightGoal:Int?,var image:String?) {
+data class UserInfo(var uid:String?=null,var name:String?=null,var age:Int?=null,var goal:String?=null,var weight:Int?=null
+                    ,var height:Int?=null,var weightGoal:Int?=null,var image:String?=null) {
 
     constructor(map:MutableMap<String,Any>) : this(null,null,null,null,null
         ,null,null,null) {

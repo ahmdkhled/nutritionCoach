@@ -18,6 +18,7 @@ class ConversationsRepo {
 
     val db=FirebaseFirestore.getInstance()
     val uid=FirebaseAuth.getInstance().uid
+    private  val TAG = "ConversationsRepo"
 
      @ExperimentalCoroutinesApi
      fun getConversations(): Flow<ConversationsResponse> {
@@ -29,23 +30,31 @@ class ConversationsRepo {
                          val res= it.result
                          if (res!=null){
                              val conversations=ArrayList<Conversation>()
+                             var count=0;
                              for (doc in res.documents){
+                                 count++
                                  val conversation=doc.toObject(Conversation::class.java)
                                  uid?.let { uid -> conversation?.users?.remove(uid) }
-                                 val userId =conversation?.users?.get(0)
-
-                                     db.collection("users").document(userId!!)
+                                 val userId =conversation?.users?.get(0).toString().trim()
+                                 Log.d(TAG, "user id :"+userId)
+                                     db.collection("users").document(userId)
                                          .get()
                                          .addOnCompleteListener{
+                                             Log.d(TAG, "getConversations: "+it.result?.toObject(UserInfo::class.java))
                                              if (it.isSuccessful){
                                                  val user=it.result?.toObject(UserInfo::class.java)
-                                                 conversation.user= user!!
+                                                 user?.uid=userId
+                                                 conversation?.user= user
+                                                 conversation?.let { it1 -> conversations.add(it1) }
+                                                 if (count==res.documents.size)
+                                                     sendBlocking(ConversationsResponse(conversations,true,null))
                                              }
+
                                          }
-                                 conversations.add(conversation)
 
                              }
-                            sendBlocking(ConversationsResponse(conversations,true,null))
+                             Log.d(TAG, "final result: "+conversations)
+
                          }
                      }
                  };

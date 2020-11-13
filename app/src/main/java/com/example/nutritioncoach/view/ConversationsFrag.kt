@@ -7,17 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nutritioncoach.R
+import com.example.nutritioncoach.adapters.ConversationsAdapter
 import com.example.nutritioncoach.databinding.FragmentConversationsBinding
 import com.example.nutritioncoach.repo.ConversationsRepo
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 class ConversationsFrag : Fragment(){
 
     lateinit var binding:FragmentConversationsBinding
+    lateinit var adapter:ConversationsAdapter
     private  val TAG = "ConversationsFrag"
 
     @ExperimentalCoroutinesApi
@@ -27,8 +28,9 @@ class ConversationsFrag : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         binding=DataBindingUtil.inflate(inflater, R.layout.fragment_conversations,container,false)
-
-
+        binding.conversationRecycler.layoutManager=LinearLayoutManager(context)
+        adapter= ConversationsAdapter(ArrayList())
+        binding.conversationRecycler.adapter=adapter
         getConversations()
         return binding.root
     }
@@ -39,6 +41,12 @@ class ConversationsFrag : Fragment(){
             ConversationsRepo().getConversations()
                 .collect {
                     Log.d(TAG, "onCreateView: "+ (it.conversations?: "error"))
+                    if (it.isSuccessfull){
+                        withContext(Dispatchers.Main){
+                            adapter.addConversations(it.conversations)
+                        }
+                    }
+
 
                 }
 
