@@ -41,6 +41,7 @@ class ConversationsFrag : Fragment(){
             ConversationsRepo().getConversations()
                 .collect {
                     Log.d(TAG, "onCreateView: "+ (it.conversations?: "error"))
+                    binding.progressBar.visibility=View.GONE
                     if (it.isSuccessfull){
                         withContext(Dispatchers.Main){
                             adapter.addConversations(it.conversations)
