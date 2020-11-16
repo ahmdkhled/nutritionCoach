@@ -18,12 +18,12 @@
             android:id="@+id/message"
             tools:text="Hi, How are you?"
             android:textSize="13sp"
-            android:background="@drawable/outgoing_chat"
-            android:paddingStart="10dp"
+            android:background="@drawable/incoming_chat"
+            android:paddingStart="20dp"
             android:paddingTop="4dp"
-            android:paddingEnd="20dp"
+            android:paddingEnd="10dp"
             android:paddingBottom="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

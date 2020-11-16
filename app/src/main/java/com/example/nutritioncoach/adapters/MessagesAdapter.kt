@@ -8,6 +8,7 @@ import com.example.nutritioncoach.R
 import com.example.nutritioncoach.databinding.LayoutIncomingChatBinding
 import com.example.nutritioncoach.databinding.LayoutOutgoingChatBinding
 import com.example.nutritioncoach.model.Message
+import com.google.firebase.auth.FirebaseAuth
 
 class MessagesAdapter(var messages:ArrayList<Message>) :RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -46,12 +47,12 @@ class MessagesAdapter(var messages:ArrayList<Message>) :RecyclerView.Adapter<Rec
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (messages.get(position).state==INCOMING_MESSAGE_TYPE)
-            return INCOMING_MESSAGE_TYPE
-        else if (messages.get(position).state==OUTGOING_MESSAGE_TYPE)
+        if (messages.get(position).senderId==FirebaseAuth.getInstance().uid)
             return OUTGOING_MESSAGE_TYPE
+        else
+            return INCOMING_MESSAGE_TYPE
 
-        return 3
+
     }
 
     fun addMessage(message:Message){

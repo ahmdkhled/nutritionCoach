@@ -109,10 +109,10 @@ class ChatFragment : Fragment() {
     fun getFakeMessages():ArrayList<Message>
     {
         val messages=ArrayList<Message>()
-        messages.add(Message("1","Hello Dococtor",1,"32"))
-        messages.add(Message("2","Hello",2,"32"))
-        messages.add(Message("3","i need some advice with my diet plan",1,"32"))
-        messages.add(Message("4","can i increase potein in my plan",1,"32"))
+        messages.add(Message("1","Hello Dococtor","32"))
+        messages.add(Message("2","Hello","32"))
+        messages.add(Message("3","i need some advice with my diet plan","32"))
+        messages.add(Message("4","can i increase potein in my plan","32"))
 
         return messages
     }
@@ -120,7 +120,7 @@ class ChatFragment : Fragment() {
     fun sendMessage(message:String){
         binding.messageBox.setText("")
         GlobalScope.launch {
-            val success=chatFragVM.sendMessage(message,"")
+            val success=chatFragVM.sendMessage(message,conversation?.getOtherUid())
             if (!success){
                 withContext(Dispatchers.Main) {
                     context?.let { ctx ->
