@@ -1,4 +1,10 @@
 package com.example.nutritioncoach.model
 
-data class Conversation (var users:ArrayList<String>?=null,var user:UserInfo?=null){
+import android.os.Parcel
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class Conversation (var users:ArrayList<String>?=null,var user:UserInfo?=null) : Parcelable {
+
 }
