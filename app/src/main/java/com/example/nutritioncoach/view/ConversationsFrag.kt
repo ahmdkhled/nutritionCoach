@@ -11,11 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nutritioncoach.R
 import com.example.nutritioncoach.adapters.ConversationsAdapter
 import com.example.nutritioncoach.databinding.FragmentConversationsBinding
+import com.example.nutritioncoach.model.Conversation
 import com.example.nutritioncoach.repo.ConversationsRepo
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 
-class ConversationsFrag : Fragment(){
+class ConversationsFrag : Fragment() ,ConversationsAdapter.OnConversationCLickListener {
 
     lateinit var binding:FragmentConversationsBinding
     lateinit var adapter:ConversationsAdapter
@@ -29,7 +30,7 @@ class ConversationsFrag : Fragment(){
     ): View? {
         binding=DataBindingUtil.inflate(inflater, R.layout.fragment_conversations,container,false)
         binding.conversationRecycler.layoutManager=LinearLayoutManager(context)
-        adapter= ConversationsAdapter(ArrayList())
+        adapter= ConversationsAdapter(this,ArrayList())
         binding.conversationRecycler.adapter=adapter
         getConversations()
         return binding.root
@@ -51,6 +52,12 @@ class ConversationsFrag : Fragment(){
                 }
 
         }
+    }
+
+    override fun onConversationCLickListener(conversation: Conversation) {
+        Log.d(TAG, "onConversationCLickListener: "+conversation)
+        val chatFragment=ChatFragment()
+        (activity as MainActivity).addFragment(chatFragment)
     }
 
 }

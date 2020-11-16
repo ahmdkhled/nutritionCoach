@@ -62,4 +62,11 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.fragmentContainer,fragment)
             .commit()
     }
+    fun addFragment(fragment : Fragment){
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.fragmentContainer,fragment)
+            .addToBackStack(null)
+            .commit()
+    }
 }

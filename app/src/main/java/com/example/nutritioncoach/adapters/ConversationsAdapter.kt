@@ -10,7 +10,11 @@ import com.example.nutritioncoach.model.Conversation
 
 class ConversationsAdapter(val conversations:ArrayList<Conversation>?) : RecyclerView.Adapter<ConversationsAdapter.ConversationHolder>() {
 
+     lateinit var onConversationCLickListener: OnConversationCLickListener
 
+    constructor(onConversationCLickListener: OnConversationCLickListener, conversations:ArrayList<Conversation>?) : this(conversations) {
+        this.onConversationCLickListener=onConversationCLickListener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationHolder {
         val binding= DataBindingUtil.inflate<LayoutConversationBinding>(
@@ -26,6 +30,12 @@ class ConversationsAdapter(val conversations:ArrayList<Conversation>?) : Recycle
 
     override fun onBindViewHolder(holder: ConversationHolder, position: Int) {
         holder.binding.user=conversations?.get(position)?.user
+
+        holder.binding.root.setOnClickListener {
+            if (conversations != null) {
+                onConversationCLickListener.onConversationCLickListener(conversations.get(position))
+            }
+        }
     }
 
     fun addConversations(conversations: ArrayList<Conversation>?){
@@ -36,5 +46,9 @@ class ConversationsAdapter(val conversations:ArrayList<Conversation>?) : Recycle
 
     class ConversationHolder(var binding: LayoutConversationBinding) :RecyclerView.ViewHolder(binding.root){
 
+    }
+
+    interface OnConversationCLickListener{
+        fun onConversationCLickListener(conversation: Conversation)
     }
 }
