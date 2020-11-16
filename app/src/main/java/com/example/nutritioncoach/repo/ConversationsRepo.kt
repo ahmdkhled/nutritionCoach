@@ -34,6 +34,7 @@ class ConversationsRepo {
                              for (doc in res.documents){
                                  count++
                                  val conversation=doc.toObject(Conversation::class.java)
+                                 conversation?.id=doc.id
                                  uid?.let { uid -> conversation?.users?.remove(uid) }
                                  val userId =conversation?.users?.get(0).toString().trim()
                                  Log.d(TAG, "user id :"+userId)

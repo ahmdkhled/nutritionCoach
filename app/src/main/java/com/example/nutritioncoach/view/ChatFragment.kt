@@ -66,8 +66,11 @@ class ChatFragment : Fragment() {
 
     @ExperimentalCoroutinesApi
     fun getMessages(){
+
         GlobalScope.launch {
-            val res=chatFragVM.getMessages("HFJSBFJFIJIEJRI");
+            val conversationId=conversation?.id
+            if (conversationId==null)return@launch
+            val res=chatFragVM.getMessages(conversationId);
 
             res.collect{
 
