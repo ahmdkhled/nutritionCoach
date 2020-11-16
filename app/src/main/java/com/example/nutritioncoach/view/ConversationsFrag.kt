@@ -57,6 +57,9 @@ class ConversationsFrag : Fragment() ,ConversationsAdapter.OnConversationCLickLi
     override fun onConversationCLickListener(conversation: Conversation) {
         Log.d(TAG, "onConversationCLickListener: "+conversation)
         val chatFragment=ChatFragment()
+        val b=Bundle()
+        b.putParcelable(chatFragment.CONVERSATION,conversation)
+        chatFragment.arguments=b
         (activity as MainActivity).addFragment(chatFragment)
     }
 

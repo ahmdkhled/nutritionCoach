@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nutritioncoach.R
 import com.example.nutritioncoach.adapters.MessagesAdapter
 import com.example.nutritioncoach.databinding.FragmentChatBinding
+import com.example.nutritioncoach.model.Conversation
 import com.example.nutritioncoach.model.Message
 import com.example.nutritioncoach.viewModel.ChatFragVM
 import es.dmoral.toasty.Toasty
@@ -21,9 +22,11 @@ import kotlinx.coroutines.flow.collect
 
 class ChatFragment : Fragment() {
 
+    val CONVERSATION= "conversation"
     lateinit var binding:FragmentChatBinding
     lateinit var adapter:MessagesAdapter
     lateinit var chatFragVM:ChatFragVM
+    var conversation: Conversation?=null
     private  val TAG = "ChatFragment"
     @ExperimentalCoroutinesApi
     override fun onCreateView(
@@ -31,7 +34,13 @@ class ChatFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-         binding=DataBindingUtil.inflate(inflater,R.layout.fragment_chat,container,false)
+        binding=DataBindingUtil.inflate(inflater,R.layout.fragment_chat,container,false)
+        val b=arguments
+
+        conversation=b?.getParcelable(CONVERSATION)
+        Log.d(TAG, "onCreateView: "+conversation)
+
+
         chatFragVM=ViewModelProvider(this).get(ChatFragVM::class.java)
 
         adapter=MessagesAdapter(ArrayList())
