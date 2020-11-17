@@ -13,13 +13,14 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
 
-        val binding=DataBindingUtil.setContentView<ActivityMainBinding>(this,
-            R.layout.activity_main
-        )
+         binding=DataBindingUtil.setContentView(this, R.layout.activity_main)
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
             when{
                 menuItem.itemId == R.id.navigationDashboard -> {
@@ -68,5 +69,9 @@ class MainActivity : AppCompatActivity() {
             .add(R.id.fragmentContainer,fragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    fun setBottomNavigationVisibility(visibility: Int) {
+        binding.bottomNavigationView.visibility=visibility
     }
 }

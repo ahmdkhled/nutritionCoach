@@ -137,4 +137,16 @@ class ChatFragment : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).setBottomNavigationVisibility(View.GONE)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        (activity as MainActivity).setBottomNavigationVisibility(View.VISIBLE)
+
+
+    }
+
 }
