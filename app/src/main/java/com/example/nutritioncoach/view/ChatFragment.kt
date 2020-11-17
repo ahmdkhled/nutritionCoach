@@ -59,6 +59,7 @@ class ChatFragment : Fragment() {
 
         }
 
+        populateData()
         getMessages()
 
         return binding.root
@@ -137,6 +138,10 @@ class ChatFragment : Fragment() {
 
     }
 
+    fun populateData(){
+        binding.name.setText(conversation?.user?.name)
+        binding.conversation=conversation
+    }
     override fun onResume() {
         super.onResume()
         (activity as MainActivity).setBottomNavigationVisibility(View.GONE)

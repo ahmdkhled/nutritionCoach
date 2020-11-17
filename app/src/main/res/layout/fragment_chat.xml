@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="conversation"
+            type="com.example.nutritioncoach.model.Conversation" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +32,8 @@
                     android:layout_width="?actionBarSize"
                     android:layout_height="50dp"
                     android:id="@+id/image"
-                    android:src="@drawable/profile"
+                    tools:src="@drawable/profile"
+                    android:src="@{conversation.user.image}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
