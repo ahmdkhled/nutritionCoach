@@ -2,6 +2,7 @@ package com.example.nutritioncoach.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import com.example.nutritioncoach.databinding.ActivityMainBinding
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -54,6 +56,13 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigationDashboard
             loadFragment(DashboardFragment())
         }
+
+        FirebaseMessaging.getInstance()
+            .token.addOnCompleteListener { task ->
+                if (task.isSuccessful){
+                    Log.d("TOKENN", task.result)
+                }
+            }
     }
 
 

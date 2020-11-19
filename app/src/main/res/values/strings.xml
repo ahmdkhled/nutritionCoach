@@ -11,6 +11,8 @@
     <string name="chat">Chat</string>
     <string name="login">login</string>
     <string name="register">register</string>
+    <string name="channel_name">message</string>
+    <string name="channel_description">channel for receiving notifications</string>
 
 
     <string-array name="weekDays">
