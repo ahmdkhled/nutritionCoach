@@ -3,6 +3,8 @@ package com.example.nutritioncoach.viewModel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.example.nutritioncoach.model.DBResult2
+import com.example.nutritioncoach.model.FcmRes
+import com.example.nutritioncoach.repo.FcmRepo
 import com.example.nutritioncoach.repo.MessagesRepo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -16,6 +18,10 @@ class ChatFragVM(application: Application) : AndroidViewModel(application) {
 
     suspend fun sendMessage(body:String,receiverId:String?): Boolean {
         return MessagesRepo().sendMessage(body,receiverId)
+    }
+
+    suspend fun sendNotification(name:String, message :String, token:String): FcmRes {
+        return FcmRepo().send(name,message,token)
     }
 
     }
