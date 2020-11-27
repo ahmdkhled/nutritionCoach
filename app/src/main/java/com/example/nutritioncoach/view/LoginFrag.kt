@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.nutritioncoach.R
 import com.example.nutritioncoach.databinding.FragmentLoginBinding
+import com.example.nutritioncoach.repo.UserRepo
+import com.example.nutritioncoach.utils.SharedHelper
 import com.example.nutritioncoach.viewModel.LoginFragVM
 import com.github.razir.progressbutton.hideProgress
 import com.github.razir.progressbutton.showProgress
@@ -66,6 +68,10 @@ class LoginFrag :Fragment() {
             withContext(Dispatchers.Main){
                 binding.login.hideProgress(R.string.login)
                 if (result.isSuccessfull){
+                    val token=SharedHelper.getToken(context!!)
+                    if (token != null) {
+                        UserRepo().updateToken(token)
+                    }
                     Log.d(TAG, "sucess in: ")
                     (activity as MainActivity).loadFragment(DashboardFragment())
                 }else

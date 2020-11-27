@@ -42,8 +42,9 @@ class ProfileFragment :Fragment() {
              if (uid==null)return@launch
              val info=profileFragVM.getUserInfo(uid)
              Log.d(TAG, "onCreateView: "+info?.documentSnapshot?.data)
+             val userInfo=info?.documentSnapshot?.toObject(UserInfo::class.java)
              withContext(Dispatchers.Main){
-                 populateInfo(binding,info?.documentSnapshot?.data)
+                 populateInfo(binding,userInfo)
              }
 
          }
@@ -54,30 +55,29 @@ class ProfileFragment :Fragment() {
 
     fun populateInfo(
         binding:FragmentProfileBinding,
-        info: MutableMap<String, Any>?
+        userInfo: UserInfo?
     ){
-        if (info==null ||uid==null)return
-        info.put("uid",uid)
-        val userInfo =UserInfo(info)
+        if (userInfo==null ||uid==null)return
+
         Log.d(TAG, "populateInfo: "+userInfo.toString())
-        val weight=userInfo.weight
-        val height=userInfo.height
+        val weight= userInfo.weight
+        val height= userInfo.height
         if (weight!=null&&height!=null){
             binding.weightGauge.moveToValue(weight.toFloat())
             val bmi=(weight.toFloat() /(height.toFloat()/100).pow(2))
             binding.bmiGauge.moveToValue(bmi)
             val df = DecimalFormat("#.##")
             df.roundingMode = RoundingMode.CEILING
-            userInfo.bmi=df.format(bmi)
+            //userInfo.bmi=df.format(bmi)
         }
-        binding.info=userInfo
+        //binding.info=userInfo
         binding.weight.startAnimation(AnimationUtils.loadAnimation(context,R.anim.tv_animation))
         binding.bmi.startAnimation(AnimationUtils.loadAnimation(context,R.anim.tv_animation))
 
         context?.let {
             Glide
                 .with(it)
-                .load(info["image"])
+                .load(userInfo.image)
                 .into(binding.image)
         }
     }

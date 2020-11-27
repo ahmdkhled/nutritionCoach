@@ -2,6 +2,7 @@ package com.example.nutritioncoach.repo
 
 import android.util.Log
 import com.example.nutritioncoach.model.DBResult
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -10,6 +11,7 @@ import kotlinx.coroutines.tasks.await
 class UserRepo {
     private  val TAG = "UserRepo"
     var db= FirebaseFirestore.getInstance();
+    val uid=FirebaseAuth.getInstance().uid
 
     public suspend fun saveUserData(uid :String,name :String,age:Int ,goal : String,height :Int ,weight :Int):Boolean{
         val user=HashMap<String,Any>()
@@ -47,4 +49,18 @@ class UserRepo {
         }
     }
 
+    fun updateToken(newToken :String){
+        if (uid==null)return
+        db.collection("users")
+            .document(uid)
+            .update("token",newToken)
+            .addOnCompleteListener { 
+                if (it.isSuccessful)
+                    Log.d(TAG, "updateToken: ")
+                else
+                    Log.d(TAG, "updateToken: failed"+it.exception)
+            }
+
+
+    }
 }

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="info"
             type="com.example.nutritioncoach.model.UserInfo" />
@@ -14,198 +17,196 @@
         android:layout_height="match_parent"
         android:background="#FAFAFA">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-        <ImageView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:id="@+id/bg"
-            android:background="@color/colorPrimary"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="wrap_content">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:id="@+id/image"
-            tools:src="@drawable/profile"
-            app:layout_constraintTop_toTopOf="@id/bg"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/bg"
-            app:layout_constraintVertical_bias=".2" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:id="@+id/bg"
+                android:background="@color/colorPrimary"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/name"
-            tools:text="Ahmed Khaled"
-            android:text="@{info.name}"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/image"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:id="@+id/image"
+                tools:src="@drawable/profile"
+                app:layout_constraintTop_toTopOf="@id/bg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/bg"
+                app:layout_constraintVertical_bias=".2" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/data_container"
-            app:cardCornerRadius="5dp"
-            app:cardElevation="8dp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/name"
+                tools:text="Ahmed Khaled"
+                android:text="@{info.name}"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-            app:layout_constraintBottom_toBottomOf="@id/bg"
-            app:layout_constraintTop_toBottomOf="@id/bg"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp">
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp">
+                android:id="@+id/data_container"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="8dp"
 
-                <TextView
-                    android:layout_width="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/bg"
+                app:layout_constraintTop_toBottomOf="@id/bg"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintHorizontal_weight="1"
-                    android:id="@+id/weight_label"
-                    android:text="Weight goal"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:textColor="@color/colorPrimary"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/hight_label"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:padding="5dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/weight_goal"
-                    tools:text="80 KG"
-                    android:text='@{info.weightGoal==-1?"-":String.valueOf(info.weightGoal)}'
-                    app:layout_constraintStart_toStartOf="@id/weight_label"
-                    app:layout_constraintTop_toBottomOf="@id/weight_label"
-                    app:layout_constraintEnd_toEndOf="@id/weight_label"
-                    android:layout_marginTop="5dp" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintHorizontal_weight="1"
+                        android:id="@+id/weight_label"
+                        android:text="Weight goal"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:textColor="@color/colorPrimary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/hight_label"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintHorizontal_weight="1"
-                    android:id="@+id/hight_label"
-                    android:text="Hight"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:textColor="@color/colorPrimary"
-                    app:layout_constraintStart_toEndOf="@id/weight_label"
-                    app:layout_constraintEnd_toStartOf="@id/goal_label"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginStart="10dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/height"
-                    tools:text="170 CM"
-                    android:text="@{String.valueOf(info.height)}"
-                    app:layout_constraintStart_toStartOf="@id/hight_label"
-                    app:layout_constraintTop_toBottomOf="@id/hight_label"
-                    app:layout_constraintEnd_toEndOf="@id/hight_label"
-                    android:layout_marginTop="5dp" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintHorizontal_weight="1"
-                    android:id="@+id/goal_label"
-                    android:text="Goal"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:textColor="@color/colorPrimary"
-                    app:layout_constraintStart_toEndOf="@id/hight_label"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginStart="10dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/goal"
-                    tools:text="Weight Loss"
-                    android:text="@{info.goal}"
-                    app:layout_constraintEnd_toEndOf="@id/goal_label"
-                    app:layout_constraintStart_toStartOf="@id/goal_label"
-                    app:layout_constraintTop_toBottomOf="@id/goal_label"
-                    android:layout_marginTop="5dp" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <de.nitri.gauge.Gauge
-            android:id="@+id/weight_gauge"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            app:initialValue="0"
-            app:maxValue="180"
-            app:minValue="0"
-            app:totalNicks="200"
-            app:valuePerNick="1"
-            app:layout_constraintTop_toBottomOf="@id/data_container"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/weight"
-            tools:text="100 KG"
-            android:text='@{info.weight==-1||info.weight==null?"-":String.valueOf(info.weight+" KG")}'
-            android:textSize="20sp"
-            android:fontFamily="sans-serif-condensed"
-            android:textColor="#434242"
-            app:layout_constraintTop_toBottomOf="@id/weight_gauge"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/weight_goal"
+                        tools:text="80 KG"
+                        android:text='@{info.weightGoal==-1?"-":String.valueOf(info.weightGoal)}'
+                        app:layout_constraintStart_toStartOf="@id/weight_label"
+                        app:layout_constraintTop_toBottomOf="@id/weight_label"
+                        app:layout_constraintEnd_toEndOf="@id/weight_label"
+                        android:layout_marginTop="5dp" />
 
 
-        <de.nitri.gauge.Gauge
-            android:id="@+id/bmi_gauge"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            app:initialValue="0"
-            app:maxValue="50"
-            app:minValue="0"
-            app:totalNicks="60"
-            app:valuePerNick="1"
-            app:scaleColor="@color/gauge_text_color"
-            app:faceColor="@color/gauge_bg"
-            app:layout_constraintTop_toBottomOf="@id/weight"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintHorizontal_weight="1"
+                        android:id="@+id/hight_label"
+                        android:text="Hight"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:textColor="@color/colorPrimary"
+                        app:layout_constraintStart_toEndOf="@id/weight_label"
+                        app:layout_constraintEnd_toStartOf="@id/goal_label"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginStart="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/height"
+                        tools:text="170 CM"
+                        android:text="@{String.valueOf(info.height)}"
+                        app:layout_constraintStart_toStartOf="@id/hight_label"
+                        app:layout_constraintTop_toBottomOf="@id/hight_label"
+                        app:layout_constraintEnd_toEndOf="@id/hight_label"
+                        android:layout_marginTop="5dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintHorizontal_weight="1"
+                        android:id="@+id/goal_label"
+                        android:text="Goal"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:textColor="@color/colorPrimary"
+                        app:layout_constraintStart_toEndOf="@id/hight_label"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginStart="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/goal"
+                        tools:text="Weight Loss"
+                        android:text="@{info.goal}"
+                        app:layout_constraintEnd_toEndOf="@id/goal_label"
+                        app:layout_constraintStart_toStartOf="@id/goal_label"
+                        app:layout_constraintTop_toBottomOf="@id/goal_label"
+                        android:layout_marginTop="5dp" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <de.nitri.gauge.Gauge
+                android:id="@+id/weight_gauge"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                app:initialValue="0"
+                app:maxValue="180"
+                app:minValue="0"
+                app:totalNicks="200"
+                app:valuePerNick="1"
+                app:layout_constraintTop_toBottomOf="@id/data_container"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/weight"
+                tools:text="100 KG"
+                android:text='@{info.weight==-1||info.weight==null?"-":String.valueOf(info.weight+" KG")}'
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="#434242"
+                app:layout_constraintTop_toBottomOf="@id/weight_gauge"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/bmi"
-            tools:text="25"
-            android:text="@{info.bmi}"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            app:layout_constraintTop_toBottomOf="@id/bmi_gauge"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <de.nitri.gauge.Gauge
+                android:id="@+id/bmi_gauge"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                app:initialValue="0"
+                app:maxValue="50"
+                app:minValue="0"
+                app:totalNicks="60"
+                app:valuePerNick="1"
+                app:scaleColor="@color/gauge_text_color"
+                app:faceColor="@color/gauge_bg"
+                app:layout_constraintTop_toBottomOf="@id/weight"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bmi"
+                tools:text="25"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintTop_toBottomOf="@id/bmi_gauge"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

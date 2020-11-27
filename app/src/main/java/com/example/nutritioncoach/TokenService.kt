@@ -6,6 +6,8 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.example.nutritioncoach.repo.UserRepo
+import com.example.nutritioncoach.utils.SharedHelper
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -16,6 +18,9 @@ class TokenService :FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         super.onNewToken(token)
         Log.d(TAG, "onNewToken: "+token)
+        SharedHelper.saveToken(applicationContext,token)
+        UserRepo().updateToken(token)
+
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
