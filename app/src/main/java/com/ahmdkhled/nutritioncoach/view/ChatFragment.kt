@@ -28,6 +28,7 @@ class ChatFragment : Fragment() {
     lateinit var chatFragVM:ChatFragVM
     var conversation: Conversation?=null
     private  val TAG = "ChatFragment"
+    @ExperimentalStdlibApi
     @ExperimentalCoroutinesApi
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -118,6 +119,7 @@ class ChatFragment : Fragment() {
         return messages
     }
 
+    @ExperimentalStdlibApi
     fun sendMessage(message:String){
         binding.messageBox.setText("")
         GlobalScope.launch {

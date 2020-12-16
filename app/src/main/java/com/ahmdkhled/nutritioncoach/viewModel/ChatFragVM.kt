@@ -20,8 +20,9 @@ class ChatFragVM(application: Application) : AndroidViewModel(application) {
         return MessagesRepo().sendMessage(body,receiverId)
     }
 
-//    suspend fun sendNotification(name:String, message :String, token:String): FcmRes {
-//        return FcmRepo().send(name,message,token)
-//    }
+    @ExperimentalStdlibApi
+    suspend fun sendNotification(name:String, message :String, token:String): FcmRes {
+        return FcmRepo().send(name,message,token)
+    }
 
     }
