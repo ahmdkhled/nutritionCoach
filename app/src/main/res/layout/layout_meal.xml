@@ -6,7 +6,7 @@
     <data>
         <variable
             name="meal"
-            type="com.example.nutritioncoach.model.Meal" />
+            type="com.ahmdkhled.nutritioncoach.model.Meal" />
     </data>
 
     <androidx.cardview.widget.CardView

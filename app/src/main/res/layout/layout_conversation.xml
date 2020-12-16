@@ -6,7 +6,7 @@
     <data>
         <variable
             name="user"
-            type="com.example.nutritioncoach.model.UserInfo" />
+            type="com.ahmdkhled.nutritioncoach.model.UserInfo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
