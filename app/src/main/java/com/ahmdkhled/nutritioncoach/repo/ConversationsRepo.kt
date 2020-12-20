@@ -4,8 +4,10 @@ import android.util.Log
 import com.ahmdkhled.nutritioncoach.model.Conversation
 import com.ahmdkhled.nutritioncoach.model.ConversationsResponse
 import com.ahmdkhled.nutritioncoach.model.UserInfo
+import com.ahmdkhled.nutritioncoach.utils.Util
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Source
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.sendBlocking
@@ -23,7 +25,7 @@ class ConversationsRepo {
 
          return callbackFlow<ConversationsResponse> {
              db.collection("chats")
-                 .get().addOnCompleteListener{
+                 .get(Source.SERVER).addOnCompleteListener{
                      if (it.isSuccessful){
                          val res= it.result
                          if (res!=null){
@@ -33,10 +35,15 @@ class ConversationsRepo {
                                  count++
                                  val conversation=doc.toObject(Conversation::class.java)
                                  conversation?.id=doc.id
-                                 uid?.let { uid -> conversation?.users?.remove(uid) }
-                                 val userId =conversation?.users?.get(0).toString().trim()
+                                 Log.d(TAG, "getConversations: ${conversation?.users}")
+                                 val users=Util.trimList(conversation?.users)
+
+                                 uid?.let { uid -> users?.remove(uid.trim() ) }
+                                 val userId =users?.get(0).toString().trim()
                                  Log.d(TAG, "user id :"+userId)
-                                     db.collection("users").document(userId)
+                                 Log.d(TAG, "getConversations2: ${conversation?.users}")
+
+                                 db.collection("users").document(userId)
                                          .get()
                                          .addOnCompleteListener{
                                              Log.d(TAG, "getConversations: "+it.result?.toObject(UserInfo::class.java))

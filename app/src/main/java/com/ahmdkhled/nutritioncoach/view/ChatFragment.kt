@@ -135,10 +135,10 @@ class ChatFragment : Fragment() {
                     }
                 }
             }else{
-                val token =" c-1i9wvlQ-Gk-vNaR04qVN:APA91bHue0NLeh2jHND1oGgH8fyeZpqo7OwmUiZDUVUC4MqJiXl-VYLtmpZZqzURbHVa53GHoBL1Atcm3LiKA1w7JfvpFyVs6uGDObUTXNFQj17sfhaWyKteRsm8RriYITPCODaJAIj3"
+                val token =conversation?.user?.token
                 val name=conversation?.user?.name?:""
                 GlobalScope.launch {
-
+                    if (token!=null)
                     chatFragVM.sendNotification(name,message,token)
                 }
             }

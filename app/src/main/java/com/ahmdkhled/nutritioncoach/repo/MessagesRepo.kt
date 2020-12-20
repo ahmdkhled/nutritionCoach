@@ -22,7 +22,7 @@ class MessagesRepo {
             val result = db.collection("chats")
                 .document(conversationId)
                 .collection("messages")
-                .limit(10)
+                .limit(50)
                 .orderBy("timestamp")
                 .addSnapshotListener { value, error ->
                     val res=DBResult2(value,true,null)
