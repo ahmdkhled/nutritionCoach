@@ -16,7 +16,5 @@ class App : MultiDexApplication() {
 
     }
 
-    override fun getBaseContext(): Context {
-        return context
-    }
+
 }

@@ -2,14 +2,18 @@ package com.ahmdkhled.nutritioncoach
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.ahmdkhled.nutritioncoach.repo.UserRepo
 import com.ahmdkhled.nutritioncoach.utils.SharedHelper
+import com.ahmdkhled.nutritioncoach.view.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+
 
 class TokenService :FirebaseMessagingService() {
 
@@ -41,6 +45,13 @@ class TokenService :FirebaseMessagingService() {
 
         }
 
+        val action1Intent: Intent = Intent(applicationContext, MainActivity::class.java)
+
+
+        val action1PendingIntent = PendingIntent.getService(applicationContext, 0,
+                action1Intent, PendingIntent.FLAG_ONE_SHOT)
+
+
 
 
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
@@ -48,6 +59,8 @@ class TokenService :FirebaseMessagingService() {
             .setContentTitle(message.notification?.title)
             .setContentText(message.notification?.body)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        builder.addAction(R.drawable.ic_baseline_message_24,"message",action1PendingIntent)
 
         notificationManager.notify(2,builder.build())
 
