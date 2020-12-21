@@ -68,9 +68,9 @@ class ProfileFragment :Fragment() {
             binding.bmiGauge.moveToValue(bmi)
             val df = DecimalFormat("#.##")
             df.roundingMode = RoundingMode.CEILING
-            //userInfo.bmi=df.format(bmi)
+            binding.bmi.text=df.format(bmi)
         }
-        //binding.info=userInfo
+        binding.info=userInfo
         binding.weight.startAnimation(AnimationUtils.loadAnimation(context,R.anim.tv_animation))
         binding.bmi.startAnimation(AnimationUtils.loadAnimation(context,R.anim.tv_animation))
 
