@@ -10,6 +10,10 @@
         <variable
             name="info"
             type="com.ahmdkhled.nutritioncoach.model.UserInfo" />
+
+        <variable
+            name="edit"
+            type="Integer" />
     </data>
 
     <ScrollView
@@ -21,12 +25,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:id="@+id/bg"
                 android:background="@color/colorPrimary"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/update"
+                android:src="@drawable/ic_baseline_edit_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white"
+                android:layout_margin="10dp"
+                />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="75dp"
@@ -52,6 +69,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="5dp"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/update_name"
+                android:src="@drawable/ic_baseline_edit_24"
+                android:visibility="@{edit}"
+                tools:visibility="visible"
+                app:layout_constraintTop_toTopOf="@id/name"
+                app:layout_constraintBottom_toBottomOf="@id/name"
+                app:layout_constraintStart_toEndOf="@id/name"
+                android:layout_marginStart="3dp"
+                />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -95,6 +125,19 @@
                         app:layout_constraintEnd_toEndOf="@id/weight_label"
                         android:layout_marginTop="5dp" />
 
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:id="@+id/update_weight_goal"
+                        android:src="@drawable/ic_baseline_edit_24"
+                        android:visibility="@{edit}"
+                        tools:visibility="visible"
+                        app:layout_constraintTop_toTopOf="@id/weight_goal"
+                        app:layout_constraintBottom_toBottomOf="@id/weight_goal"
+                        app:layout_constraintStart_toEndOf="@id/weight_goal"
+                        android:layout_marginStart="3dp"
+                        />
+
 
                     <TextView
                         android:layout_width="0dp"
@@ -121,6 +164,19 @@
                         app:layout_constraintEnd_toEndOf="@id/hight_label"
                         android:layout_marginTop="5dp" />
 
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:id="@+id/update_height"
+                        android:src="@drawable/ic_baseline_edit_24"
+                        android:visibility="@{edit}"
+                        tools:visibility="visible"
+                        app:layout_constraintTop_toTopOf="@id/height"
+                        app:layout_constraintBottom_toBottomOf="@id/height"
+                        app:layout_constraintStart_toEndOf="@id/height"
+                        android:layout_marginStart="3dp"
+                        />
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -140,11 +196,27 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/goal"
                         tools:text="Weight Loss"
+                        android:textSize="14sp"
                         android:text="@{info.goal}"
                         app:layout_constraintEnd_toEndOf="@id/goal_label"
                         app:layout_constraintStart_toStartOf="@id/goal_label"
                         app:layout_constraintTop_toBottomOf="@id/goal_label"
-                        android:layout_marginTop="5dp" />
+                        app:layout_constraintHorizontal_bias=".4"
+                        android:layout_marginTop="5dp"
+                        />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:id="@+id/update_goal"
+                        android:src="@drawable/ic_baseline_edit_24"
+                        android:visibility="@{edit}"
+                        tools:visibility="visible"
+                        app:layout_constraintTop_toTopOf="@id/goal"
+                        app:layout_constraintBottom_toBottomOf="@id/goal"
+                        app:layout_constraintStart_toEndOf="@id/goal"
+                        android:layout_marginStart="3dp"
+                        />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -177,6 +249,19 @@
                 app:layout_constraintTop_toBottomOf="@id/weight_gauge"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/update_weight"
+                android:src="@drawable/ic_baseline_edit_24"
+                android:visibility="@{edit}"
+                tools:visibility="visible"
+                app:layout_constraintTop_toTopOf="@id/weight"
+                app:layout_constraintBottom_toBottomOf="@id/weight"
+                app:layout_constraintStart_toEndOf="@id/weight"
+                android:layout_marginStart="3dp"
+                />
 
 
             <de.nitri.gauge.Gauge

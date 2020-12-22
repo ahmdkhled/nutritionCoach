@@ -33,6 +33,23 @@ class UserRepo {
 
     }
 
+    public suspend fun updateUserData(field:String,value:Any):Boolean{
+
+        if (uid==null)return false
+        try {
+
+            db.collection("users")
+                    .document(uid)
+                    .update(field,value)
+                    .await();
+            return true;
+        }catch (exception :Exception){
+            Log.d(TAG, "updateUserData: "+exception)
+            return false;
+        }
+
+    }
+
     suspend fun getUserData(uid:String): DBResult? {
         try {
         val result= db.collection("users")

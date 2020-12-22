@@ -10,4 +10,8 @@ class ProfileFragVM(application: Application) : AndroidViewModel(application) {
     suspend fun getUserInfo(uid:String):DBResult?{
         return UserRepo().getUserData(uid);
     }
-}
+    public suspend fun updateUserData(field:String,value:Any):Boolean{
+        return UserRepo().updateUserData(field,value)
+    }
+
+    }

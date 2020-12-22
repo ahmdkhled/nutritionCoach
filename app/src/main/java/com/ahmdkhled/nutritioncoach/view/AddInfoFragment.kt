@@ -70,6 +70,7 @@ class AddInfoFragment :Fragment() {
             }
             else if (position==1&&isChecked)
                 binding.goal.setUncheckedTogglePosition(0)
+                goal="gain weight"
 
         }
 

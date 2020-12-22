@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.ahmdkhled.nutritioncoach.R
 import com.ahmdkhled.nutritioncoach.databinding.FragmentProfileBinding
 import com.ahmdkhled.nutritioncoach.model.UserInfo
+import com.ahmdkhled.nutritioncoach.view.dialogs.ProfileUpdateDialog
 import com.ahmdkhled.nutritioncoach.viewModel.ProfileFragVM
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -24,19 +25,20 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import kotlin.math.pow
 
-class ProfileFragment :Fragment() {
+class ProfileFragment :Fragment(),ProfileUpdateDialog.OnFieldUpdated {
 
     private  val TAG = "ProfileFragg"
     lateinit var profileFragVM :ProfileFragVM
+    lateinit var binding:FragmentProfileBinding
     val uid=Firebase.auth.uid
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding=DataBindingUtil.inflate<FragmentProfileBinding>(inflater, R.layout.fragment_profile,container,false)
+         binding=DataBindingUtil.inflate(inflater, R.layout.fragment_profile,container,false)
         profileFragVM=ViewModelProvider(this).get(ProfileFragVM::class.java)
-
+        binding.edit=View.GONE
 
          GlobalScope.launch {
              if (uid==null)return@launch
@@ -49,6 +51,11 @@ class ProfileFragment :Fragment() {
 
          }
 
+        binding.update.setOnClickListener {
+            binding.edit=View.VISIBLE
+        }
+
+        handleUpdate()
 
         return binding.root
     }
@@ -81,4 +88,38 @@ class ProfileFragment :Fragment() {
                 .into(binding.image)
         }
     }
+
+
+    fun handleUpdate(){
+        binding.updateName.setOnClickListener {
+            val profileUpdateDialog=ProfileUpdateDialog("name",this)
+            profileUpdateDialog.show(childFragmentManager,"")
+        }
+        binding.updateHeight.setOnClickListener {
+            val profileUpdateDialog=ProfileUpdateDialog("height",this)
+            profileUpdateDialog.show(childFragmentManager,"")
+        }
+        binding.updateWeight.setOnClickListener {
+            val profileUpdateDialog=ProfileUpdateDialog("weight",this)
+            profileUpdateDialog.show(childFragmentManager,"")
+        }
+        binding.updateWeightGoal.setOnClickListener {
+            val profileUpdateDialog=ProfileUpdateDialog("weightGoal",this)
+            profileUpdateDialog.show(childFragmentManager,"")
+        }
+        binding.updateGoal.setOnClickListener {
+            val profileUpdateDialog=ProfileUpdateDialog("goal",this)
+            profileUpdateDialog.show(childFragmentManager,"")
+        }
+    }
+
+    override fun onFieldUpdated(field: String, newValue: String) {
+
+        if (field == "name"){ binding.name.text=newValue }
+        if (field == "weight"){ binding.weight.text=newValue }
+        if (field == "height"){ binding.height.text=newValue }
+        if (field == "weightGoal"){ binding.weightGoal.text=newValue }
+        if (field == "goal"){ binding.goal.text=newValue }
+    }
+
 }
