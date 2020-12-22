@@ -56,6 +56,18 @@
                 app:layout_constraintBottom_toBottomOf="@id/bg"
                 app:layout_constraintVertical_bias=".2" />
 
+            <ImageView
+                android:layout_width="65dp"
+                android:layout_height="25dp"
+                android:id="@+id/update_photo"
+                android:src="@drawable/ic_baseline_photo_camera_24"
+                app:layout_constraintTop_toTopOf="@id/image"
+                app:layout_constraintBottom_toBottomOf="@id/image"
+                app:layout_constraintStart_toStartOf="@id/image"
+                app:layout_constraintEnd_toEndOf="@id/image"
+                app:layout_constraintVertical_bias=".97"
+                />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

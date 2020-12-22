@@ -1,5 +1,7 @@
 package com.ahmdkhled.nutritioncoach.view
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,7 +10,9 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.ahmdkhled.nutritioncoach.R
 import com.ahmdkhled.nutritioncoach.databinding.FragmentProfileBinding
@@ -17,6 +21,7 @@ import com.ahmdkhled.nutritioncoach.view.dialogs.ProfileUpdateDialog
 import com.ahmdkhled.nutritioncoach.viewModel.ProfileFragVM
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -25,12 +30,19 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import kotlin.math.pow
 
-class ProfileFragment :Fragment(),ProfileUpdateDialog.OnFieldUpdated {
+class ProfileFragment :Fragment(),ProfileUpdateDialog.OnFieldUpdated,
+    MainActivity.OnProfileImageLoaded {
 
     private  val TAG = "ProfileFragg"
     lateinit var profileFragVM :ProfileFragVM
     lateinit var binding:FragmentProfileBinding
     val uid=Firebase.auth.uid
+
+    companion object{
+        val PICK_IMAGE_REQUEST_CODE=156
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,6 +68,11 @@ class ProfileFragment :Fragment(),ProfileUpdateDialog.OnFieldUpdated {
         }
 
         handleUpdate()
+        binding.updatePhoto.setOnClickListener {
+            val intent=Intent(Intent.ACTION_GET_CONTENT)
+            intent.type="image/*"
+            activity?.startActivityForResult(intent,PICK_IMAGE_REQUEST_CODE)
+        }
 
         return binding.root
     }
@@ -86,6 +103,7 @@ class ProfileFragment :Fragment(),ProfileUpdateDialog.OnFieldUpdated {
                 .with(it)
                 .load(userInfo.image)
                 .into(binding.image)
+
         }
     }
 
@@ -111,6 +129,8 @@ class ProfileFragment :Fragment(),ProfileUpdateDialog.OnFieldUpdated {
             val profileUpdateDialog=ProfileUpdateDialog("goal",this)
             profileUpdateDialog.show(childFragmentManager,"")
         }
+
+        (activity as MainActivity).onProfileImageLoaded=this
     }
 
     override fun onFieldUpdated(field: String, newValue: String) {
@@ -121,5 +141,27 @@ class ProfileFragment :Fragment(),ProfileUpdateDialog.OnFieldUpdated {
         if (field == "weightGoal"){ binding.weightGoal.text=newValue }
         if (field == "goal"){ binding.goal.text=newValue }
     }
+
+    override fun onProfileImageLoaded(uri: Uri?) {
+        if (uri==null)return
+        viewLifecycleOwner.lifecycleScope.launch {
+            val response=profileFragVM.uploadProfileImage(uri)
+                .observe(viewLifecycleOwner, Observer{response->
+                    if (response.success){
+                        val downloadUri=response.model
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            val success=profileFragVM.updateUserData("image",downloadUri.toString().trim())
+                            if (success){
+                                binding.image.setImageURI(uri)
+
+                            }
+                        }
+                    }
+                })
+
+
+        }
+    }
+
 
 }

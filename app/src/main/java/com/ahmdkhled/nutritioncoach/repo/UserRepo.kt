@@ -1,15 +1,22 @@
 package com.ahmdkhled.nutritioncoach.repo
 
+import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.ahmdkhled.nutritioncoach.model.DBResult
+import com.ahmdkhled.nutritioncoach.model.Response
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 
 class UserRepo {
     private  val TAG = "UserRepo"
     var db= FirebaseFirestore.getInstance();
     val uid=FirebaseAuth.getInstance().uid
+    lateinit var downloadUrl:MutableLiveData<Response<Uri>>
 
     public suspend fun saveUserData(uid :String,name :String,age:Int ,goal : String,height :Int ,weight :Int):Boolean{
         val user=HashMap<String,Any>()
@@ -47,6 +54,27 @@ class UserRepo {
             Log.d(TAG, "updateUserData: "+exception)
             return false;
         }
+
+    }
+
+    suspend fun uploadProfileImage(uri: Uri): MutableLiveData<Response<Uri>> {
+        downloadUrl= MutableLiveData()
+            val result= FirebaseStorage.getInstance()
+                .reference
+                .root
+                .child("profileImages")
+                .child(uid+System.currentTimeMillis())
+                .putFile(uri)
+                .addOnSuccessListener {taskSnapshot ->
+                    taskSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener {
+                        Log.d(TAG, "uploadProfileImage: $it")
+                        downloadUrl.value=Response(it,false,true,null)
+
+                    }
+                }
+
+
+        return downloadUrl
 
     }
 
