@@ -25,6 +25,7 @@ class UserRepo {
         user["goal"] = goal
         user["height"] = height
         user["weight"] = weight
+        user["level"] = 3
 
         try {
 
