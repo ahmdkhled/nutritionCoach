@@ -102,6 +102,7 @@ class ProfileFragment :Fragment(),ProfileUpdateDialog.OnFieldUpdated,
             Glide
                 .with(it)
                 .load(userInfo.image)
+                .placeholder(R.drawable.profile)
                 .into(binding.image)
 
         }

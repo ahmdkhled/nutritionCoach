@@ -22,11 +22,15 @@ class ConversationsRepo {
 
      @ExperimentalCoroutinesApi
      fun getConversations(): Flow<ConversationsResponse> {
-
+        if (uid==null)return callbackFlow {
+            sendBlocking(ConversationsResponse(null,false,null))
+        }
          return callbackFlow<ConversationsResponse> {
              db.collection("chats")
+                 .whereArrayContains("users",uid)
                  .get(Source.SERVER).addOnCompleteListener{
                      if (it.isSuccessful){
+                         Log.d(TAG, "getConversations: ${it.result?.documents}")
                          val res= it.result
                          if (res!=null){
                              val conversations=ArrayList<Conversation>()
@@ -38,7 +42,7 @@ class ConversationsRepo {
                                  Log.d(TAG, "getConversations: ${conversation?.users}")
                                  val users=Util.trimList(conversation?.users)
 
-                                 uid?.let { uid -> users?.remove(uid.trim() ) }
+                                 uid.let { uid -> users?.remove(uid.trim() ) }
                                  val userId =users?.get(0).toString().trim()
                                  Log.d(TAG, "user id :"+userId)
                                  Log.d(TAG, "getConversations2: ${conversation?.users}")
