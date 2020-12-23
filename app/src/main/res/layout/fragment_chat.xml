@@ -29,8 +29,8 @@
                 android:layout_height="?actionBarSize">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="?actionBarSize"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:id="@+id/image"
                     tools:src="@drawable/profile"
                     android:src="@{conversation.user.image}"
@@ -52,6 +52,7 @@
                     app:layout_constraintTop_toTopOf="@+id/image"
                     app:layout_constraintBottom_toBottomOf="@id/image"
                     android:layout_marginStart="5dp"
+                    app:layout_constraintVertical_bias=".2"
 
                     />
 
