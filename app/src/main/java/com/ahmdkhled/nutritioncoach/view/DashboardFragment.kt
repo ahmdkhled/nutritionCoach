@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ahmdkhled.nutritioncoach.R
 import com.ahmdkhled.nutritioncoach.adapters.PlanDaysAdapter
@@ -18,6 +19,7 @@ import com.ahmdkhled.nutritioncoach.model.Meal
 import com.ahmdkhled.nutritioncoach.viewModel.DashboardFragVM
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -67,8 +69,11 @@ class DashboardFragment : Fragment() {
 
                 //binding.planRecycler.layoutManager= StackCardLayoutManager(1)
 
-            }else
+            }else{
+                Toasty.error(context!!,dietResult.errorMessage.toString()).show()
                 Log.d(TAG, "error: "+dietResult.errorMessage)
+
+            }
 
         }
         return binding.root

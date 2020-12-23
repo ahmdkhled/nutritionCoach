@@ -4,10 +4,13 @@ import android.util.Log
 import com.ahmdkhled.nutritioncoach.model.Day
 import com.ahmdkhled.nutritioncoach.model.DietResult
 import com.ahmdkhled.nutritioncoach.model.Plan
+import com.ahmdkhled.nutritioncoach.model.PlanData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.tasks.await
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DietRepo{
     private  val TAG = "DietRepo"
@@ -16,19 +19,28 @@ class DietRepo{
      suspend fun getCurrentPlan(uid: String?): DietResult {
         if (uid==null)return DietResult(null,false,"you are not logged in")
          Log.d(TAG, "getCurrentPlan: "+uid)
+         val weekOfYear=Calendar.getInstance().get(Calendar.WEEK_OF_YEAR).toString()
+         val year=Calendar.getInstance().get(Calendar.YEAR).toString()
+         val currentPlanRef=(weekOfYear+year)
+
          try {
 
             val userPlan = db.collection("user-diets")
                 .document(uid)
                 .collection("p")
-                .orderBy("date")
-                .limit(1)
+                .document(currentPlanRef)
                 .get()
                 .await()
 
-             val planId=userPlan.documents.get(0).id;
+             Log.d(TAG, "getCurrentPlan: $currentPlanRef")
+             Log.d(TAG, "getCurrentPlan: ${userPlan.data}")
+             val planData=userPlan.toObject(PlanData::class.java)
+             if (planData==null||planData.plan==null){
+                 return DietResult(null,false,"there is no plan")
+
+             }
              val planObj=db.collection("diets")
-                 .document(planId)
+                 .document(planData.plan!!)
                  .get()
                  .await();
 
