@@ -6,6 +6,7 @@ import com.ahmdkhled.nutritioncoach.model.AuthResult
 import com.ahmdkhled.nutritioncoach.model.Response
 import com.ahmdkhled.nutritioncoach.repo.AuthRepo
 import com.ahmdkhled.nutritioncoach.repo.ConversationsRepo
+import com.ahmdkhled.nutritioncoach.repo.DietRepo
 import com.ahmdkhled.nutritioncoach.repo.MessagesRepo
 
 class RegisterVM(application: Application) : AndroidViewModel(application) {
@@ -28,6 +29,11 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
     ): Boolean {
         return MessagesRepo().sendMessage(body,receiverId,conversationId,senderId)
     }
+
+    suspend fun assignPlan(){
+        return DietRepo().assignPlan()
+    }
+
 
 
 }

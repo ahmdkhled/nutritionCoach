@@ -62,6 +62,7 @@ class RegisterFragment : Fragment() {
                     val res=registerVM.addFirstConversation()
                     registerVM.sendMessage(getString(R.string.welcome_message),Firebase.auth.uid,res.model
                         ,getString(R.string.nitro_uid))
+                    registerVM.assignPlan()
                     withContext(Dispatchers.Main){
                         binding.register.hideProgress(R.string.done)
                         clearFields(binding.email, binding.password)

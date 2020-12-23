@@ -74,6 +74,7 @@ class LoginFrag :Fragment() {
                     }
                     Log.d(TAG, "sucess in: ")
                     (activity as MainActivity).loadFragment(DashboardFragment())
+                    (activity as MainActivity).setBottomNavigationVisibility(View.VISIBLE)
                 }else
                     context?.let { Toasty.error(it,"login failed "+result.errorMessage).show() }
             }

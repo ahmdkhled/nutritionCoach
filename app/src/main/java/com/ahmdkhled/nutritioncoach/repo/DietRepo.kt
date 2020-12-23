@@ -5,7 +5,9 @@ import com.ahmdkhled.nutritioncoach.model.Day
 import com.ahmdkhled.nutritioncoach.model.DietResult
 import com.ahmdkhled.nutritioncoach.model.Plan
 import com.ahmdkhled.nutritioncoach.model.PlanData
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.tasks.await
@@ -15,6 +17,9 @@ import kotlin.collections.ArrayList
 class DietRepo{
     private  val TAG = "DietRepo"
     val db= FirebaseFirestore.getInstance()
+    val uid=Firebase.auth.uid
+    val year=Calendar.getInstance().get(Calendar.YEAR)
+    val week=Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)
 
      suspend fun getCurrentPlan(uid: String?): DietResult {
         if (uid==null)return DietResult(null,false,"you are not logged in")
@@ -65,5 +70,24 @@ class DietRepo{
         }
 
      }
+
+    suspend fun assignPlan(planWeek:String,plan :String){
+        if (uid==null)return
+        db.collection("user-diets")
+            .document(uid)
+            .collection("p")
+            .document(planWeek)
+            .set(PlanData(plan,System.currentTimeMillis()))
+            .await()
+    }
+
+    suspend fun assignPlan(){
+        val week1=week.toString()+year.toString()
+        val week2=(week+1).toString()+year.toString()
+        val week3=(week+2).toString()+year.toString()
+        assignPlan(week1,"1")
+        assignPlan(week2,"1")
+        assignPlan(week3,"1")
+    }
 
 }
