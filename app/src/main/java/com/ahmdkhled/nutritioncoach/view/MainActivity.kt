@@ -61,7 +61,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigationDashboard
             loadFragment(DashboardFragment())
         }
-
         FirebaseMessaging.getInstance()
             .token.addOnCompleteListener { task ->
                 if (task.isSuccessful){

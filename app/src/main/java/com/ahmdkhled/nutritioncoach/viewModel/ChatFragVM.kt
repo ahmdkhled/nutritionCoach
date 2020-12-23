@@ -16,8 +16,13 @@ class ChatFragVM(application: Application) : AndroidViewModel(application) {
         return MessagesRepo().getMessages(conversationId)
     }
 
-    suspend fun sendMessage(body:String,receiverId:String?): Boolean {
-        return MessagesRepo().sendMessage(body,receiverId)
+    suspend fun sendMessage(
+        body: String,
+        receiverId: String?,
+        conversationId: String?,
+        senderId: String?=null
+    ): Boolean {
+        return MessagesRepo().sendMessage(body,receiverId,conversationId,senderId)
     }
 
     @ExperimentalStdlibApi

@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.ahmdkhled.nutritioncoach.R
 import com.ahmdkhled.nutritioncoach.databinding.FragmentRegisterBinding
 import com.ahmdkhled.nutritioncoach.repo.AuthRepo
@@ -48,22 +49,27 @@ class RegisterFragment : Fragment() {
                 progressColor=Color.WHITE
             }
 
-            GlobalScope.launch(Dispatchers.IO) {
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
 
 
                 Log.d("TAG", "loading: ")
 
-                val result = AuthRepo().register(
+                val result = registerVM.register(
                     binding.email.text.toString(),
                     binding.password.password.text.toString()
                 )
-                if (result.isSuccessfull!!) {
+                if (result.isSuccessfull) {
+                    val res=registerVM.addFirstConversation()
+                    registerVM.sendMessage(getString(R.string.welcome_message),Firebase.auth.uid,res.model
+                        ,getString(R.string.nitro_uid))
                     withContext(Dispatchers.Main){
                         binding.register.hideProgress(R.string.done)
                         clearFields(binding.email, binding.password)
                         Log.d("TAG", " success " + result.authResult?.user?.uid)
                         (activity as MainActivity).loadFragment(AddInfoFragment());
                     }
+
+
 
 
                 } else{

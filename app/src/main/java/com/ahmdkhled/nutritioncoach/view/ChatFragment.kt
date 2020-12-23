@@ -123,7 +123,7 @@ class ChatFragment : Fragment() {
     fun sendMessage(message:String){
         binding.messageBox.setText("")
         GlobalScope.launch {
-            val success=chatFragVM.sendMessage(message,conversation?.getOtherUid())
+            val success=chatFragVM.sendMessage(message, conversation?.getOtherUid(),conversation?.id )
             if (!success){
                 withContext(Dispatchers.Main) {
                     context?.let { ctx ->

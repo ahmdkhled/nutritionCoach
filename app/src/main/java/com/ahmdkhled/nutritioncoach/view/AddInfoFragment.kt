@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.ahmdkhled.nutritioncoach.R
 import com.ahmdkhled.nutritioncoach.databinding.FragmentAddInfoBinding
 import com.ahmdkhled.nutritioncoach.viewModel.AddInfoFragVM
@@ -39,7 +40,7 @@ class AddInfoFragment :Fragment() {
             binding.save.showProgress{
                 buttonTextRes=R.string.loading
             }
-            GlobalScope.launch {
+            viewLifecycleOwner.lifecycleScope.launch {
                 val success=addInfoFragVM.saveUserData(
                     uid, binding.nameIL.editText?.text.toString(),
                     binding.ageIL.editText?.text.toString().toInt(),
@@ -50,6 +51,7 @@ class AddInfoFragment :Fragment() {
                 if (success){
                     withContext(Dispatchers.Main){
                         (activity as MainActivity).loadFragment(DashboardFragment())
+                        (activity as MainActivity).setBottomNavigationVisibility(View.VISIBLE)
                         binding.save.hideProgress(R.string.done)
                     }
 

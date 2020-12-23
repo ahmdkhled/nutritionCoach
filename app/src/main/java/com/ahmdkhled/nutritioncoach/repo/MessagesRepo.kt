@@ -39,15 +39,25 @@ class MessagesRepo {
 
     }
 
-    suspend fun sendMessage(body:String,receiverId:String?): Boolean {
+    suspend fun sendMessage(
+        body:String,
+        receiverId:String?,
+        conversationId: String?,
+        senderId:String?=null): Boolean {
         val uid= FirebaseAuth.getInstance().uid ?: return false
         receiverId?:return false
+        conversationId?:return false
 
-        val message=Message(null,body,uid,receiverId,System.currentTimeMillis())
+        var senderUid: String
+        if (senderId==null)senderUid=uid
+        else senderUid=senderId
+
+
+        val message=Message(null,body,senderUid,receiverId,System.currentTimeMillis())
 
         try {
             db.collection("chats")
-                .document("HFJSBFJFIJIEJRI")
+                .document(conversationId)
                 .collection("messages")
                 .document()
                 .set(message)

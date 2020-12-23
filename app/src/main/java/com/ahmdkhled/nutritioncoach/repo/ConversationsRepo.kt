@@ -1,8 +1,11 @@
 package com.ahmdkhled.nutritioncoach.repo
 
 import android.util.Log
+import com.ahmdkhled.nutritioncoach.App
+import com.ahmdkhled.nutritioncoach.R
 import com.ahmdkhled.nutritioncoach.model.Conversation
 import com.ahmdkhled.nutritioncoach.model.ConversationsResponse
+import com.ahmdkhled.nutritioncoach.model.Response
 import com.ahmdkhled.nutritioncoach.model.UserInfo
 import com.ahmdkhled.nutritioncoach.utils.Util
 import com.google.firebase.auth.FirebaseAuth
@@ -13,8 +16,9 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.tasks.await
 
-class ConversationsRepo {
+object ConversationsRepo {
 
     val db=FirebaseFirestore.getInstance()
     val uid=FirebaseAuth.getInstance().uid
@@ -73,6 +77,32 @@ class ConversationsRepo {
 
              }
          }
+
+
+    }
+
+    suspend fun addFirstConversation(): Response<String> {
+        if (uid==null) return Response(null,false,true,null)
+
+        val users=ArrayList<String>()
+        users.add(uid)
+        users.add(App.context.getString(R.string.nitro_uid))
+        val chat=HashMap<String,Any>()
+
+        chat["users"]=users
+        try {
+            val id=db.collection("chats")
+                .document().id
+            db.collection("chats")
+                .document(id)
+                .set(chat)
+                .await()
+            return Response(id,false,true,null)
+
+        }catch (ex:Exception){
+            return Response(null,false,true,ex.message)
+
+        }
 
 
     }
