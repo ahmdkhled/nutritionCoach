@@ -41,8 +41,13 @@ class DashboardFragment : Fragment() {
         dashboardFragVM=ViewModelProvider(this).get(DashboardFragVM::class.java)
         binding=DataBindingUtil.inflate(inflater,R.layout.fragment_dashboard,container,false)
 
+        loadPlan()
 
+        return binding.root
+    }
 
+    fun loadPlan(){
+        binding.progres.visibility=View.VISIBLE
         GlobalScope.launch {
             val dietResult=dashboardFragVM.getDietPlan(Firebase.auth.uid)
             Log.d(TAG, "uid : "+Firebase.auth.uid)
@@ -51,7 +56,7 @@ class DashboardFragment : Fragment() {
                 val adapter=PlanDaysAdapter(dietResult.plan!!.days,context)
 
                 withContext(Dispatchers.Main){
-
+                    binding.progres.visibility=View.GONE
                     binding.planRecycler.adapter=adapter
                     binding.planRecycler.layoutManager= LinearLayoutManager(context)
                     val todayIndex= Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
@@ -72,11 +77,11 @@ class DashboardFragment : Fragment() {
             }else{
                 Toasty.error(context!!,dietResult.errorMessage.toString()).show()
                 Log.d(TAG, "error: "+dietResult.errorMessage)
+                binding.progres.visibility=View.GONE
 
             }
 
         }
-        return binding.root
     }
 
     fun getFakeDays(): ArrayList<Day> {
